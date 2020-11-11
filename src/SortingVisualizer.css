@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  align-items: flex-end;
+  align-content: flex-end;
+  justify-content: space-between;
+  height: 95vh;
+  width: 95vw;
+  margin: auto;
+}
+
+.bar {
+  background-color: indigo;
+}
