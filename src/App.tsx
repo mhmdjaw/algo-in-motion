@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar";
+import Options from "./components/Options";
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
       </Switch>
       <Route path="/algorithms/:algorithm">
         <NavBar>{}</NavBar>
+        <Options />
       </Route>
       <Route path="/algorithms/quick-sort" component={SortingVisualizer} />
     </Router>

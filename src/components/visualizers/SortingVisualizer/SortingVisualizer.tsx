@@ -204,7 +204,8 @@ const SortingVisualizer: React.FC = () => {
   return (
     <>
       <Box
-        className={classes.container}
+        height="80vh"
+        width="95vw"
         display="flex"
         alignItems="flex-end"
         justifyContent="space-between"
