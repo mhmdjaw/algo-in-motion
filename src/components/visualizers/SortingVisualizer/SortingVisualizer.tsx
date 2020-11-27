@@ -1,20 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./SortingVisualizer.css";
 import { v4 as uuidv4 } from "uuid";
-import { quickSort } from "./quick-sort";
+import { quickSort } from "../../../algorithms/quick-sort";
+import { useTheme } from "@material-ui/core/styles";
+import { ArrayNumber } from "./sorting-visualizer-array";
+import { Box } from "@material-ui/core";
+import useSortingVisualizerStyles from "./sorting-visualizer-styles";
 const ANIMATION_SPEED = 5;
 
-export interface arrayNumber {
-  id: string;
-  value: number;
-}
-
 const SortingVisualizer: React.FC = () => {
-  const [array, setArray] = useState<Array<arrayNumber>>([]);
+  const [array, setArray] = useState<Array<ArrayNumber>>([]);
   const barRef = useRef<Array<HTMLDivElement | null>>([]);
   const timeouts = useRef<Array<NodeJS.Timeout>>([]);
 
-  const range = 500;
+  const classes = useSortingVisualizerStyles();
+  const theme = useTheme();
+  const color = theme.palette;
+  const [secondaryColor, yellow, red, green] = [
+    color.secondary.main,
+    "yellow",
+    "red",
+    "lime",
+  ];
+
+  const range = 310;
   const totalBarWidths = 90 - ((90 - 50) / 306) * (range - 4);
   const width = totalBarWidths / range;
 
@@ -22,18 +30,19 @@ const SortingVisualizer: React.FC = () => {
     resetArray();
   }, []);
 
-  function resetArray(): void {
-    const newArray: Array<arrayNumber> = [];
+  const resetArray = () => {
+    const newArray: Array<ArrayNumber> = [];
 
     for (let i = 0; i < range; i++) {
       newArray.push({ id: uuidv4(), value: randomNumberInterval(2, 100) });
     }
 
     barRef.current = new Array(newArray.length);
+    timeouts.current.map((timeout) => clearTimeout(timeout));
     setArray(newArray);
-  }
+  };
 
-  function quickSortClick(): void {
+  const quickSortClick = () => {
     const animations = quickSort(array);
     timeouts.current = new Array(animations.length);
 
@@ -47,11 +56,11 @@ const SortingVisualizer: React.FC = () => {
           const iBar = barRef.current[i]?.style;
           const jBar = barRef.current[j]?.style;
 
-          setTimeout(() => {
+          timeouts.current[index] = setTimeout(() => {
             console.log("animation running");
-            if (pivotBar) pivotBar.background = "yellow";
-            if (iBar) iBar.background = "lime";
-            if (jBar) jBar.background = "lime";
+            if (pivotBar) pivotBar.background = yellow;
+            if (iBar) iBar.background = green;
+            if (jBar) jBar.background = green;
           }, index * ANIMATION_SPEED);
 
           break;
@@ -62,9 +71,9 @@ const SortingVisualizer: React.FC = () => {
           const iBar = barRef.current[i]?.style;
           const nextBar = barRef.current[i + 1]?.style;
 
-          setTimeout(() => {
-            if (iBar) iBar.background = "indigo";
-            if (nextBar) nextBar.background = "lime";
+          timeouts.current[index] = setTimeout(() => {
+            if (iBar) iBar.background = secondaryColor;
+            if (nextBar) nextBar.background = green;
           }, index * ANIMATION_SPEED);
 
           break;
@@ -75,9 +84,9 @@ const SortingVisualizer: React.FC = () => {
           const jBar = barRef.current[j]?.style;
           const nextBar = barRef.current[j - 1]?.style;
 
-          setTimeout(() => {
-            if (jBar) jBar.background = "indigo";
-            if (nextBar) nextBar.background = "lime";
+          timeouts.current[index] = setTimeout(() => {
+            if (jBar) jBar.background = secondaryColor;
+            if (nextBar) nextBar.background = green;
           }, index * ANIMATION_SPEED);
 
           break;
@@ -89,9 +98,9 @@ const SortingVisualizer: React.FC = () => {
           const iBar = barRef.current[i]?.style;
           const jBar = barRef.current[j]?.style;
 
-          setTimeout(() => {
-            if (iBar) iBar.background = "red";
-            if (jBar) jBar.background = "red";
+          timeouts.current[index] = setTimeout(() => {
+            if (iBar) iBar.background = red;
+            if (jBar) jBar.background = red;
           }, index * ANIMATION_SPEED);
 
           break;
@@ -105,7 +114,7 @@ const SortingVisualizer: React.FC = () => {
           const iBar = barRef.current[i]?.style;
           const jBar = barRef.current[j]?.style;
 
-          setTimeout(() => {
+          timeouts.current[index] = setTimeout(() => {
             if (iBar) iBar.height = `${iHeight}%`;
             if (jBar) jBar.height = `${jHeight}%`;
           }, index * ANIMATION_SPEED);
@@ -121,11 +130,11 @@ const SortingVisualizer: React.FC = () => {
           const nextiBar = barRef.current[i + 1]?.style;
           const nextjBar = barRef.current[j - 1]?.style;
 
-          setTimeout(() => {
-            if (iBar) iBar.background = "indigo";
-            if (jBar) jBar.background = "indigo";
-            if (nextiBar) nextiBar.background = "lime";
-            if (nextjBar) nextjBar.background = "lime";
+          timeouts.current[index] = setTimeout(() => {
+            if (iBar) iBar.background = secondaryColor;
+            if (jBar) jBar.background = secondaryColor;
+            if (nextiBar) nextiBar.background = green;
+            if (nextjBar) nextjBar.background = green;
           }, index * ANIMATION_SPEED);
 
           break;
@@ -139,10 +148,10 @@ const SortingVisualizer: React.FC = () => {
           const jBar = barRef.current[j]?.style;
           const iBar = barRef.current[i]?.style;
 
-          setTimeout(() => {
-            if (pivotBar) pivotBar.background = "red";
-            if (jBar) jBar.background = "red";
-            if (iBar) iBar.background = "indigo";
+          timeouts.current[index] = setTimeout(() => {
+            if (pivotBar) pivotBar.background = red;
+            if (jBar) jBar.background = red;
+            if (iBar) iBar.background = secondaryColor;
           }, index * ANIMATION_SPEED);
 
           break;
@@ -154,9 +163,9 @@ const SortingVisualizer: React.FC = () => {
           const pivotBar = barRef.current[pivot]?.style;
           const jBar = barRef.current[j]?.style;
 
-          setTimeout(() => {
-            if (pivotBar) pivotBar.background = "indigo";
-            if (jBar) jBar.background = "indigo";
+          timeouts.current[index] = setTimeout(() => {
+            if (pivotBar) pivotBar.background = secondaryColor;
+            if (jBar) jBar.background = secondaryColor;
           }, index * ANIMATION_SPEED);
 
           break;
@@ -168,8 +177,8 @@ const SortingVisualizer: React.FC = () => {
     });
 
     const backgroundColor = barRef.current[0]?.style;
-    if (backgroundColor) backgroundColor.background = "red";
-  }
+    if (backgroundColor) backgroundColor.background = red;
+  };
 
   // function testSortingAlgorithm(): void {
   //   for (let i = 0; i < 100; i++) {
@@ -194,16 +203,22 @@ const SortingVisualizer: React.FC = () => {
 
   return (
     <>
-      <div className="container">
+      <Box
+        className={classes.container}
+        display="flex"
+        alignItems="flex-end"
+        justifyContent="space-between"
+        mx="auto"
+      >
         {array.map((nb, i) => (
           <div
             ref={(el) => (barRef.current[i] = el)}
-            className="bar"
+            className={classes.bar}
             key={nb.id}
             style={{ height: `${nb.value}%`, width: `${width}%` }}
           ></div>
         ))}
-      </div>
+      </Box>
       <button onClick={resetArray}>Generate a new array</button>
       <button onClick={quickSortClick}>quick sort</button>
       {/* <button onClick={testSortingAlgorithm}>test</button> */}
@@ -211,9 +226,9 @@ const SortingVisualizer: React.FC = () => {
   );
 };
 
-function randomNumberInterval(from: number, to: number): number {
+const randomNumberInterval = (from: number, to: number): number => {
   return Math.floor(Math.random() * (to - from + 1) + from);
-}
+};
 
 // const arraysAreEqual = (
 //   arrayOne: Array<number>,

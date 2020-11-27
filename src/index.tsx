@@ -2,12 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-// import { Provider } from 'react-redux';
+//import { Provider } from 'react-redux';
 import * as serviceWorker from "./serviceWorker";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { darkTheme } from "./themes/dark";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
