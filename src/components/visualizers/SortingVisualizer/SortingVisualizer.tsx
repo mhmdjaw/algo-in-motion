@@ -1,13 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { quickSort } from "../../../algorithms/quick-sort";
 import { useTheme } from "@material-ui/core/styles";
 import { ArrayNumber } from "./sorting-visualizer-array";
 import { Box } from "@material-ui/core";
 import useSortingVisualizerStyles from "./sorting-visualizer-styles";
+import { useDispatch, useSelector } from "react-redux";
+import { resetComplete } from "../../../redux/visualizer/visualizer-actions";
 const ANIMATION_SPEED = 5;
 
+interface RootState {
+  visualizer: {
+    isRunning: boolean;
+    isGenerated: boolean;
+    isResetting: boolean;
+  };
+}
+
 const SortingVisualizer: React.FC = () => {
+  const state = useSelector((state: RootState) => state);
+
+  const dispatch = useDispatch();
+
   const [array, setArray] = useState<Array<ArrayNumber>>([]);
   const barRef = useRef<Array<HTMLDivElement | null>>([]);
   const timeouts = useRef<Array<NodeJS.Timeout>>([]);
@@ -26,11 +40,8 @@ const SortingVisualizer: React.FC = () => {
   const totalBarWidths = 90 - ((90 - 50) / 306) * (range - 4);
   const width = totalBarWidths / range;
 
-  useEffect(() => {
-    resetArray();
-  }, []);
-
-  const resetArray = () => {
+  const resetArray = useCallback(() => {
+    dispatch(resetComplete());
     const newArray: Array<ArrayNumber> = [];
 
     for (let i = 0; i < range; i++) {
@@ -40,9 +51,9 @@ const SortingVisualizer: React.FC = () => {
     barRef.current = new Array(newArray.length);
     timeouts.current.map((timeout) => clearTimeout(timeout));
     setArray(newArray);
-  };
+  }, [dispatch]);
 
-  const quickSortClick = () => {
+  const quickSortRun = useCallback(() => {
     const animations = quickSort(array);
     timeouts.current = new Array(animations.length);
 
@@ -57,7 +68,6 @@ const SortingVisualizer: React.FC = () => {
           const jBar = barRef.current[j]?.style;
 
           timeouts.current[index] = setTimeout(() => {
-            console.log("animation running");
             if (pivotBar) pivotBar.background = yellow;
             if (iBar) iBar.background = green;
             if (jBar) jBar.background = green;
@@ -175,10 +185,21 @@ const SortingVisualizer: React.FC = () => {
           break;
       }
     });
+  }, [array, yellow, green, red, secondaryColor]);
 
-    const backgroundColor = barRef.current[0]?.style;
-    if (backgroundColor) backgroundColor.background = red;
-  };
+  useEffect(() => {
+    if (state.visualizer.isResetting) {
+      resetArray();
+    }
+    if (state.visualizer.isRunning) {
+      quickSortRun();
+    }
+  }, [
+    state.visualizer.isRunning,
+    state.visualizer.isResetting,
+    quickSortRun,
+    resetArray,
+  ]);
 
   // function testSortingAlgorithm(): void {
   //   for (let i = 0; i < 100; i++) {
@@ -209,6 +230,7 @@ const SortingVisualizer: React.FC = () => {
         display="flex"
         alignItems="flex-end"
         justifyContent="space-between"
+        mb="5vh"
         mx="auto"
       >
         {array.map((nb, i) => (
@@ -220,8 +242,8 @@ const SortingVisualizer: React.FC = () => {
           ></div>
         ))}
       </Box>
-      <button onClick={resetArray}>Generate a new array</button>
-      <button onClick={quickSortClick}>quick sort</button>
+      {/* <button onClick={resetArray}>Generate a new array</button>
+      <button onClick={quickSortClick}>quick sort</button> */}
       {/* <button onClick={testSortingAlgorithm}>test</button> */}
     </>
   );

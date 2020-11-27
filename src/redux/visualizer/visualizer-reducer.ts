@@ -1,23 +1,22 @@
-import { Action } from "../action";
 import {
   RESET_COMPLETE,
   RESET_VISUALIZER,
   RUN_VISUALIZER,
+  CHANGE_VISUALIZER,
+  VisualizerActionTypes,
+  VisualizerState,
 } from "./visualizer-types";
 
-interface state {
-  isRunning: boolean;
-  isGenerated: boolean;
-  isResetting: boolean;
-}
-
-const initialState: state = {
+const initialState: VisualizerState = {
   isRunning: false,
   isGenerated: true,
-  isResetting: false,
+  isResetting: true,
 };
 
-const visualizerReducer = (state = initialState, action: Action): state => {
+const visualizerReducer = (
+  state = initialState,
+  action: VisualizerActionTypes
+): VisualizerState => {
   switch (action.type) {
     case RUN_VISUALIZER:
       return {
@@ -28,11 +27,17 @@ const visualizerReducer = (state = initialState, action: Action): state => {
       return {
         ...state,
         isResetting: true,
+        isRunning: false,
       };
     case RESET_COMPLETE:
       return {
         ...state,
         isResetting: false,
+      };
+    case CHANGE_VISUALIZER:
+      return {
+        ...state,
+        isRunning: false,
       };
     default:
       return state;
