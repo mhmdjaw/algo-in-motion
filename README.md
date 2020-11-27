@@ -1,3 +1,3 @@
-## Available Scripts
+## Algo in Motion
 
 Algorithm visualizer
