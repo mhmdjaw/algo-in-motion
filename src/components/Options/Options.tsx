@@ -3,16 +3,32 @@ import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import { Box, CssBaseline } from "@material-ui/core";
 import useOptionsStyles from "./options-styles";
+import { OptionsState } from "../../redux/options/options-types";
+import { useDispatch, useSelector } from "react-redux";
+import { changeSize, changeSpeed } from "../../redux";
+
+interface rootState {
+  options: OptionsState;
+}
 
 const Options: React.FC = () => {
   const classes = useOptionsStyles();
-  const [value, setValue] = React.useState<number>(30);
+  const state = useSelector((state: rootState) => state);
+  const dispatch = useDispatch();
 
-  const handleChange = (
+  const handleChange = (name: string) => (
     event: ChangeEvent<Record<string, unknown>>,
     newValue: number | number[]
   ) => {
-    setValue(newValue as number);
+    const value = newValue as number;
+    console.log(name);
+    console.log(value);
+
+    if (name === "size") {
+      dispatch(changeSize(value));
+    } else if (name === "speed") {
+      dispatch(changeSpeed(value));
+    }
   };
 
   return (
@@ -25,7 +41,7 @@ const Options: React.FC = () => {
         mx="auto"
         my="10vh"
       >
-        <Box width="20%" display="flex" alignItems="center">
+        {/* <Box width="20%" display="flex" alignItems="center">
           <Typography className={classes.typographyItems} variant="body2">
             NODES
           </Typography>
@@ -35,15 +51,17 @@ const Options: React.FC = () => {
             onChange={handleChange}
             aria-labelledby="continuous-slider"
           />
-        </Box>
+        </Box> */}
         <Box width="20%" display="flex" alignItems="center">
           <Typography className={classes.typographyItems} variant="body2">
-            EDGES
+            SIZE
           </Typography>
           <Slider
             className={classes.sliderItems}
-            value={value}
-            onChange={handleChange}
+            max={310}
+            min={5}
+            value={state.options.size}
+            onChange={handleChange("size")}
             aria-labelledby="continuous-slider"
           />
         </Box>
@@ -53,8 +71,8 @@ const Options: React.FC = () => {
           </Typography>
           <Slider
             className={classes.sliderItems}
-            value={value}
-            onChange={handleChange}
+            value={state.options.speed}
+            onChange={handleChange("speed")}
             aria-labelledby="continuous-slider"
           />
         </Box>

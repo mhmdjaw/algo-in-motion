@@ -20,8 +20,10 @@ const App: React.FC = () => {
       <Route path="/algorithms/:algorithm">
         <NavBar>{}</NavBar>
         <Options />
+        <Route path="/algorithms/quick-sort">
+          <SortingVisualizer />
+        </Route>
       </Route>
-      <Route path="/algorithms/quick-sort" component={SortingVisualizer} />
     </Router>
   );
 };

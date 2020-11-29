@@ -1,9 +1,9 @@
+import { Action } from "@reduxjs/toolkit";
 import {
   RESET_COMPLETE,
   RESET_VISUALIZER,
   RUN_VISUALIZER,
   CHANGE_VISUALIZER,
-  VisualizerActionTypes,
   VisualizerState,
 } from "./visualizer-types";
 
@@ -15,7 +15,7 @@ const initialState: VisualizerState = {
 
 const visualizerReducer = (
   state = initialState,
-  action: VisualizerActionTypes
+  action: Action
 ): VisualizerState => {
   switch (action.type) {
     case RUN_VISUALIZER:

@@ -6,19 +6,23 @@ import { ArrayNumber } from "./sorting-visualizer-array";
 import { Box } from "@material-ui/core";
 import useSortingVisualizerStyles from "./sorting-visualizer-styles";
 import { useDispatch, useSelector } from "react-redux";
-import { resetComplete } from "../../../redux/visualizer/visualizer-actions";
-const ANIMATION_SPEED = 5;
+import {
+  resetComplete,
+  resetVisualizer,
+} from "../../../redux/visualizer/visualizer-actions";
+import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
+import { OptionsState } from "../../../redux/options/options-types";
+import { useLocation } from "react-router-dom";
+import { QUICK_SORT } from "../../../algorithms/algorithm-types";
 
 interface RootState {
-  visualizer: {
-    isRunning: boolean;
-    isGenerated: boolean;
-    isResetting: boolean;
-  };
+  visualizer: VisualizerState;
+  options: OptionsState;
 }
 
 const SortingVisualizer: React.FC = () => {
   const state = useSelector((state: RootState) => state);
+  const { pathname } = useLocation();
 
   const dispatch = useDispatch();
 
@@ -36,7 +40,13 @@ const SortingVisualizer: React.FC = () => {
     "lime",
   ];
 
-  const range = 310;
+  const animationSpeed =
+    (1 - state.options.speed / 100) *
+      (3 + (1 - state.options.size / 310) * 310) +
+    5;
+  console.log(animationSpeed);
+
+  const range = state.options.size;
   const totalBarWidths = 90 - ((90 - 50) / 306) * (range - 4);
   const width = totalBarWidths / range;
 
@@ -45,13 +55,16 @@ const SortingVisualizer: React.FC = () => {
     const newArray: Array<ArrayNumber> = [];
 
     for (let i = 0; i < range; i++) {
-      newArray.push({ id: uuidv4(), value: randomNumberInterval(2, 100) });
+      newArray.push({
+        id: uuidv4(),
+        value: (randomNumberInterval(4, 200) / 200) * 100,
+      });
     }
 
     barRef.current = new Array(newArray.length);
     timeouts.current.map((timeout) => clearTimeout(timeout));
     setArray(newArray);
-  }, [dispatch]);
+  }, [dispatch, range]);
 
   const quickSortRun = useCallback(() => {
     const animations = quickSort(array);
@@ -71,7 +84,7 @@ const SortingVisualizer: React.FC = () => {
             if (pivotBar) pivotBar.background = yellow;
             if (iBar) iBar.background = green;
             if (jBar) jBar.background = green;
-          }, index * ANIMATION_SPEED);
+          }, index * animationSpeed);
 
           break;
         }
@@ -84,7 +97,7 @@ const SortingVisualizer: React.FC = () => {
           timeouts.current[index] = setTimeout(() => {
             if (iBar) iBar.background = secondaryColor;
             if (nextBar) nextBar.background = green;
-          }, index * ANIMATION_SPEED);
+          }, index * animationSpeed);
 
           break;
         }
@@ -97,7 +110,7 @@ const SortingVisualizer: React.FC = () => {
           timeouts.current[index] = setTimeout(() => {
             if (jBar) jBar.background = secondaryColor;
             if (nextBar) nextBar.background = green;
-          }, index * ANIMATION_SPEED);
+          }, index * animationSpeed);
 
           break;
         }
@@ -111,7 +124,7 @@ const SortingVisualizer: React.FC = () => {
           timeouts.current[index] = setTimeout(() => {
             if (iBar) iBar.background = red;
             if (jBar) jBar.background = red;
-          }, index * ANIMATION_SPEED);
+          }, index * animationSpeed);
 
           break;
         }
@@ -127,7 +140,7 @@ const SortingVisualizer: React.FC = () => {
           timeouts.current[index] = setTimeout(() => {
             if (iBar) iBar.height = `${iHeight}%`;
             if (jBar) jBar.height = `${jHeight}%`;
-          }, index * ANIMATION_SPEED);
+          }, index * animationSpeed);
 
           break;
         }
@@ -145,7 +158,7 @@ const SortingVisualizer: React.FC = () => {
             if (jBar) jBar.background = secondaryColor;
             if (nextiBar) nextiBar.background = green;
             if (nextjBar) nextjBar.background = green;
-          }, index * ANIMATION_SPEED);
+          }, index * animationSpeed);
 
           break;
         }
@@ -162,7 +175,7 @@ const SortingVisualizer: React.FC = () => {
             if (pivotBar) pivotBar.background = red;
             if (jBar) jBar.background = red;
             if (iBar) iBar.background = secondaryColor;
-          }, index * ANIMATION_SPEED);
+          }, index * animationSpeed);
 
           break;
         }
@@ -176,7 +189,7 @@ const SortingVisualizer: React.FC = () => {
           timeouts.current[index] = setTimeout(() => {
             if (pivotBar) pivotBar.background = secondaryColor;
             if (jBar) jBar.background = secondaryColor;
-          }, index * ANIMATION_SPEED);
+          }, index * animationSpeed);
 
           break;
         }
@@ -185,21 +198,28 @@ const SortingVisualizer: React.FC = () => {
           break;
       }
     });
-  }, [array, yellow, green, red, secondaryColor]);
+  }, [array, yellow, green, red, secondaryColor, animationSpeed]);
 
   useEffect(() => {
     if (state.visualizer.isResetting) {
       resetArray();
     }
     if (state.visualizer.isRunning) {
-      quickSortRun();
+      if (pathname.split("/")[2] === QUICK_SORT) {
+        quickSortRun();
+      }
     }
   }, [
     state.visualizer.isRunning,
     state.visualizer.isResetting,
+    pathname,
     quickSortRun,
     resetArray,
   ]);
+
+  useEffect(() => {
+    dispatch(resetVisualizer());
+  }, [state.options.size, resetArray, dispatch]);
 
   // function testSortingAlgorithm(): void {
   //   for (let i = 0; i < 100; i++) {

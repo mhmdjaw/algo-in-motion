@@ -111,7 +111,12 @@ const NavBar: React.FC<Props> = (props: Props) => {
               })}
             </Menu>
             <div className={classes.grow}></div>
-            <IconButton className={classes.iconButton} aria-label="github-link">
+            <IconButton
+              href="https://github.com/mhmdjaw/algo-in-motion"
+              target="_blank"
+              className={classes.iconButton}
+              aria-label="github-link"
+            >
               <GitHubIcon />
             </IconButton>
             <IconButton

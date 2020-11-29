@@ -8,7 +8,3 @@ export interface VisualizerState {
   isGenerated: boolean;
   isResetting: boolean;
 }
-
-export interface VisualizerActionTypes {
-  type: string;
-}
