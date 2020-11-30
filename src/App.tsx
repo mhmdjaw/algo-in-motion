@@ -20,7 +20,7 @@ const App: React.FC = () => {
       <Route path="/algorithms/:algorithm">
         <NavBar>{}</NavBar>
         <Options />
-        <Route path="/algorithms/quick-sort">
+        <Route path={["/algorithms/quick-sort", "/algorithms/merge-sort"]}>
           <SortingVisualizer />
         </Route>
       </Route>

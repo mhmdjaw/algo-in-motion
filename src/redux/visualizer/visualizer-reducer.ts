@@ -5,12 +5,14 @@ import {
   RUN_VISUALIZER,
   CHANGE_VISUALIZER,
   VisualizerState,
+  VISUALIZATION_COMPLETE,
 } from "./visualizer-types";
 
 const initialState: VisualizerState = {
   isRunning: false,
   isGenerated: true,
   isResetting: true,
+  isComplete: false,
 };
 
 const visualizerReducer = (
@@ -28,6 +30,7 @@ const visualizerReducer = (
         ...state,
         isResetting: true,
         isRunning: false,
+        isComplete: false,
       };
     case RESET_COMPLETE:
       return {
@@ -37,6 +40,14 @@ const visualizerReducer = (
     case CHANGE_VISUALIZER:
       return {
         ...state,
+        isRunning: false,
+        isComplete: false,
+      };
+
+    case VISUALIZATION_COMPLETE:
+      return {
+        ...state,
+        isComplete: true,
         isRunning: false,
       };
     default:

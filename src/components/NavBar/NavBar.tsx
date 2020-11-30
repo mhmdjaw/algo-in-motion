@@ -16,17 +16,15 @@ import useNavBarStyles from "./nav-bar-styles";
 import { useDispatch, useSelector } from "react-redux";
 import { resetVisualizer, runVisualizer } from "../../redux";
 import { changeVisualizer } from "../../redux/visualizer/visualizer-actions";
+import { resetOptions } from "../../redux/options/options-actions";
+import { VisualizerState } from "../../redux/visualizer/visualizer-types";
 
 interface Props {
   children: React.ReactElement;
 }
 
 interface RootState {
-  visualizer: {
-    isRunning: boolean;
-    isGenerated: boolean;
-    isResetting: boolean;
-  };
+  visualizer: VisualizerState;
 }
 
 const HideOnScroll: React.FC<Props> = (props: Props) => {
@@ -60,16 +58,18 @@ const NavBar: React.FC<Props> = (props: Props) => {
   };
 
   const handleMenuClick = (algorithmURL: string) => {
-    dispatch(changeVisualizer());
     if (algorithmURL === pathname) {
       handleClose();
     } else {
+      dispatch(changeVisualizer());
+      dispatch(resetOptions());
       history.push(algorithmURL);
     }
+    handleClose();
   };
 
   const handleActionClick = () => {
-    if (state.visualizer.isRunning) {
+    if (state.visualizer.isRunning || state.visualizer.isComplete) {
       dispatch(resetVisualizer());
     } else {
       dispatch(runVisualizer());
@@ -124,7 +124,11 @@ const NavBar: React.FC<Props> = (props: Props) => {
               onClick={handleActionClick}
               aria-label="action-visualizer"
             >
-              {state.visualizer.isRunning ? <ReplayIcon /> : <PlayArrowIcon />}
+              {state.visualizer.isRunning || state.visualizer.isComplete ? (
+                <ReplayIcon />
+              ) : (
+                <PlayArrowIcon />
+              )}
             </IconButton>
           </Toolbar>
         </AppBar>

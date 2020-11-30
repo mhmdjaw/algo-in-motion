@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   resetComplete,
   resetVisualizer,
+  visualizationComplete,
 } from "../../../redux/visualizer/visualizer-actions";
 import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
 import { OptionsState } from "../../../redux/options/options-types";
 import { useLocation } from "react-router-dom";
-import { QUICK_SORT } from "../../../algorithms/algorithm-types";
+import { MERGE_SORT, QUICK_SORT } from "../../../algorithms/algorithm-types";
 import { mergeSort } from "../../../algorithms/merge-sort";
 
 interface RootState {
@@ -67,7 +68,7 @@ const SortingVisualizer: React.FC = () => {
 
   const quickSortRun = useCallback(() => {
     const animations = quickSort(array);
-    timeouts.current = new Array(animations.length);
+    timeouts.current = new Array(animations.length + 1);
 
     animations.forEach((animation, index) => {
       switch (animation.action) {
@@ -80,6 +81,7 @@ const SortingVisualizer: React.FC = () => {
           const jBar = barRef.current[j]?.style;
 
           timeouts.current[index] = setTimeout(() => {
+            console.log("hello");
             if (pivotBar) pivotBar.background = YELLOW;
             if (iBar) iBar.background = GREEN;
             if (jBar) jBar.background = GREEN;
@@ -197,11 +199,15 @@ const SortingVisualizer: React.FC = () => {
           break;
       }
     });
-  }, [array, YELLOW, GREEN, RED, SECONDARY_COLOR, animationSpeed]);
+
+    timeouts.current[animations.length + 1] = setTimeout(() => {
+      dispatch(visualizationComplete());
+    }, animations.length * animationSpeed);
+  }, [array, YELLOW, GREEN, RED, SECONDARY_COLOR, animationSpeed, dispatch]);
 
   const mergeSortRun = useCallback(() => {
     const animations = mergeSort(array);
-    timeouts.current = new Array(animations.length);
+    timeouts.current = new Array(animations.length + 1);
 
     animations.forEach((animation, index) => {
       switch (animation.action) {
@@ -235,7 +241,11 @@ const SortingVisualizer: React.FC = () => {
           break;
       }
     });
-  }, [array, animationSpeed, PRIMARY_COLOR, SECONDARY_COLOR]);
+
+    timeouts.current[animations.length + 1] = setTimeout(() => {
+      dispatch(visualizationComplete());
+    }, animations.length * animationSpeed);
+  }, [array, animationSpeed, PRIMARY_COLOR, SECONDARY_COLOR, dispatch]);
 
   useEffect(() => {
     if (state.visualizer.isResetting) {
@@ -245,18 +255,22 @@ const SortingVisualizer: React.FC = () => {
       if (pathname.split("/")[2] === QUICK_SORT) {
         quickSortRun();
       }
+      if (pathname.split("/")[2] === MERGE_SORT) {
+        mergeSortRun();
+      }
     }
   }, [
     state.visualizer.isRunning,
     state.visualizer.isResetting,
     pathname,
     quickSortRun,
+    mergeSortRun,
     resetArray,
   ]);
 
   useEffect(() => {
     dispatch(resetVisualizer());
-  }, [state.options.size, resetArray, dispatch]);
+  }, [state.options.size, resetArray, dispatch, pathname]);
 
   // const testSortingAlgorithm = (): void => {
   //   for (let i = 0; i < 100; i++) {

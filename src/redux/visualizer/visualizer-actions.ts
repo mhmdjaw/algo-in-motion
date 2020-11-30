@@ -4,6 +4,7 @@ import {
   RESET_VISUALIZER,
   RUN_VISUALIZER,
   CHANGE_VISUALIZER,
+  VISUALIZATION_COMPLETE,
 } from "./visualizer-types";
 
 export const runVisualizer = (): Action => {
@@ -27,5 +28,11 @@ export const resetComplete = (): Action => {
 export const changeVisualizer = (): Action => {
   return {
     type: CHANGE_VISUALIZER,
+  };
+};
+
+export const visualizationComplete = (): Action => {
+  return {
+    type: VISUALIZATION_COMPLETE,
   };
 };

@@ -6,9 +6,11 @@ import useOptionsStyles from "./options-styles";
 import { OptionsState } from "../../redux/options/options-types";
 import { useDispatch, useSelector } from "react-redux";
 import { changeSize, changeSpeed } from "../../redux";
+import { VisualizerState } from "../../redux/visualizer/visualizer-types";
 
 interface rootState {
   options: OptionsState;
+  visualizer: VisualizerState;
 }
 
 const Options: React.FC = () => {
@@ -73,6 +75,7 @@ const Options: React.FC = () => {
             className={classes.sliderItems}
             value={state.options.speed}
             onChange={handleChange("speed")}
+            disabled={state.visualizer.isRunning}
             aria-labelledby="continuous-slider"
           />
         </Box>

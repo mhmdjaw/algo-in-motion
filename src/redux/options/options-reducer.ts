@@ -3,6 +3,7 @@ import {
   CHANGE_SPEED,
   OptionsActionTypes,
   OptionsState,
+  RESET_OPTIONS,
 } from "./options-types";
 
 const initialState: OptionsState = {
@@ -25,6 +26,12 @@ const optionsReducer = (
       return {
         ...state,
         size: action.payload as number,
+      };
+
+    case RESET_OPTIONS:
+      return {
+        speed: 100,
+        size: 310,
       };
 
     default:
