@@ -9,6 +9,7 @@ import {
 import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar";
 import Options from "./components/Options";
+import Description from "./components/Desrcription";
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
         <Route path={["/algorithms/quick-sort", "/algorithms/merge-sort"]}>
           <SortingVisualizer />
         </Route>
+        <Description />
       </Route>
     </Router>
   );

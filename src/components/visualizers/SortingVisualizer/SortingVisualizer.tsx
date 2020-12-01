@@ -313,8 +313,8 @@ const SortingVisualizer: React.FC = () => {
           ></div>
         ))}
       </Box>
-      <button onClick={resetArray}>Generate a new array</button>
-      <button onClick={mergeSortRun}>merge sort</button>
+      {/* <button onClick={resetArray}>Generate a new array</button>
+      <button onClick={mergeSortRun}>merge sort</button> */}
       {/* <button onClick={testSortingAlgorithm}>test</button> */}
     </>
   );
