@@ -12,7 +12,7 @@ const Description: React.FC = () => {
 
   return (
     <Container maxWidth="md">
-      <Box my={4} mt="30vh">
+      <Box my="30vh">
         <Paper className={classes.paper} elevation={7}>
           {algorithm === QUICK_SORT && <QuickSortDescription />}
           {algorithm === MERGE_SORT && <MergeSortDescription />}

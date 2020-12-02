@@ -16,15 +16,27 @@ const MergeSortDescription: React.FC = () => {
         the partition
       </Typography>
 
-      <Typography className={classes.title}>Algorithm Explanation</Typography>
+      <Typography className={classes.title}>Explanation</Typography>
       <Typography>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        Just like Quick Sort, Merge Sort is a Divide and Conquer algorithm, and
+        one of its main competitors. The main difference is that unlike Quick
+        Sort, Merge Sort is <strong className={classes.emp}>stable </strong>,
+        which means it has the same complexity of{" "}
+        <em className={classes.italic}>O (n log n) </em> from its best to its
+        worst case. The reason why in the worst case it performs better than
+        Quick Sort which has a complexity of{" "}
+        <em className={classes.italic}>
+          O (n<sup>2</sup>),{" "}
+        </em>{" "}
+        although in general, its performance is lower because it makes more
+        comparisons than Quick Sort on average.
+        <br />
+        <br />
+        Merge Sort is based on the idea of dividing the list in two halves
+        recursively until there is only one element in each sublist. At this
+        point, each sublist is considered to be sorted. Then comes the process
+        of merging back two sorted sublists at a time until the main list is
+        completely sorted.
       </Typography>
     </>
   );

@@ -11,11 +11,11 @@ const useDescriptionStyles = makeStyles((theme) => ({
   },
   emp: {
     color: theme.palette.primary.main,
-    fontWeight: "bold",
   },
   italic: {
     color: theme.palette.secondary.main,
     fontWeight: "bold",
+    fontStyle: "italic",
   },
   legend: {
     lineHeight: "2",

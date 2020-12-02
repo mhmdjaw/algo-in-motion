@@ -17,15 +17,27 @@ const QuickSortDescription: React.FC = () => {
         <span className={classes.swapLegend}>red: </span>swaping values
       </Typography>
 
-      <Typography className={classes.title}>Algorithm Explanation</Typography>
+      <Typography className={classes.title}>Explanation</Typography>
       <Typography>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        Quick Sort is a Divide and Conquer algorithm, which means the problem is
+        recursively divided into smaller problems until they are easy to solve.
+        The complexity of quick sort is
+        <em className={classes.italic}> O(n log n)</em> in the best and average
+        case, and{" "}
+        <em className={classes.italic}>
+          O(n<sup>2</sup>)
+        </em>{" "}
+        in the worst case. However, on average it has the best sorting
+        performance which is the reasong why it is considered the{" "}
+        <strong className={classes.emp}>fastest </strong>
+        sorting algorithm.
+        <br />
+        <br />
+        The algorithm first picks a random pivot and places all elements with
+        values that are less than the pivot on the left and elements with
+        greater values than the pivot on the right. The process is then repeated
+        recursively on the left and right partitions until no further
+        partitioning can be made.
       </Typography>
     </>
   );
