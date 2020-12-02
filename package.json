@@ -17,6 +17,7 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/uuid": "^8.3.0",
     "framer-motion": "^2.9.4",
+    "konva": "^7.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-konva": "^17.0.0-0",

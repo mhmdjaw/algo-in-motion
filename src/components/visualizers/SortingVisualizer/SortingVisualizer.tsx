@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { quickSort } from "../../../algorithms/quick-sort";
+import quickSort from "../../../algorithms/quick-sort";
+import mergeSort from "../../../algorithms/merge-sort";
 import { useTheme } from "@material-ui/core/styles";
-import { ArrayNumber } from "./sorting-visualizer-array";
+import { ArrayNumber } from "./sorting-visualizer-types";
 import { Box } from "@material-ui/core";
 import useSortingVisualizerStyles from "./sorting-visualizer-styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +16,7 @@ import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
 import { OptionsState } from "../../../redux/options/options-types";
 import { useLocation } from "react-router-dom";
 import { MERGE_SORT, QUICK_SORT } from "../../../algorithms/algorithm-types";
-import { mergeSort } from "../../../algorithms/merge-sort";
+import { randomNumberInterval } from "../../../heplers";
 
 interface RootState {
   visualizer: VisualizerState;
@@ -52,6 +53,8 @@ const SortingVisualizer: React.FC = () => {
 
   const resetArray = useCallback(() => {
     dispatch(resetComplete());
+    timeouts.current.map((timeout) => clearTimeout(timeout));
+
     const newArray: Array<ArrayNumber> = [];
 
     for (let i = 0; i < range; i++) {
@@ -62,7 +65,6 @@ const SortingVisualizer: React.FC = () => {
     }
 
     barRef.current = new Array(newArray.length);
-    timeouts.current.map((timeout) => clearTimeout(timeout));
     setArray(newArray);
   }, [dispatch, range]);
 
@@ -318,10 +320,6 @@ const SortingVisualizer: React.FC = () => {
       {/* <button onClick={testSortingAlgorithm}>test</button> */}
     </>
   );
-};
-
-const randomNumberInterval = (from: number, to: number): number => {
-  return Math.floor(Math.random() * (to - from + 1) + from);
 };
 
 // const arraysAreEqual = (

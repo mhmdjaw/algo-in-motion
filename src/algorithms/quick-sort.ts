@@ -1,4 +1,4 @@
-import { ArrayNumber } from "../components/visualizers/SortingVisualizer/sorting-visualizer-array";
+import { ArrayNumber } from "../components/visualizers/SortingVisualizer/sorting-visualizer-types";
 
 interface Animation {
   action:
@@ -13,7 +13,7 @@ interface Animation {
   index: number[];
 }
 
-export const quickSort = (array: ArrayNumber[]): Animation[] => {
+const quickSort = (array: ArrayNumber[]): Animation[] => {
   const animations: Animation[] = [];
   quickSortHelper(array, 0, array.length - 1, animations);
   return animations;
@@ -94,3 +94,5 @@ const partition = (
   animations.push({ action: "SWAP_PIVOT_DONE", index: [low, j] });
   return j;
 };
+
+export default quickSort;

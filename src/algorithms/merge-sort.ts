@@ -1,11 +1,11 @@
-import { ArrayNumber } from "../components/visualizers/SortingVisualizer/sorting-visualizer-array";
+import { ArrayNumber } from "../components/visualizers/SortingVisualizer/sorting-visualizer-types";
 
 interface Animation {
   action: "SAVE_VALUE" | "UPDATE_PARTITION";
   index: number[];
 }
 
-export const mergeSort = (array: ArrayNumber[]): Animation[] => {
+const mergeSort = (array: ArrayNumber[]): Animation[] => {
   const animations: Animation[] = [];
   mergeSortHelper(array, 0, array.length - 1, animations);
   return animations;
@@ -76,3 +76,5 @@ const merge = (
     array[low + k].value = temp[k];
   }
 };
+
+export default mergeSort;

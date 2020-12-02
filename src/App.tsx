@@ -10,6 +10,7 @@ import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar";
 import Options from "./components/Options";
 import Description from "./components/Desrcription";
+import GraphTraversalVisualizer from "./components/visualizers/GraphTraversalVisualizer";
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,9 @@ const App: React.FC = () => {
         <Options />
         <Route path={["/algorithms/quick-sort", "/algorithms/merge-sort"]}>
           <SortingVisualizer />
+        </Route>
+        <Route path="/algorithms/bfs">
+          <GraphTraversalVisualizer />
         </Route>
         <Description />
       </Route>

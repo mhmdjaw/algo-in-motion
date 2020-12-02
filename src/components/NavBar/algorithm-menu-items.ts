@@ -12,6 +12,10 @@ const algorithmMenuItems: AlgorithmMenuItem[] = [
     algorithmTitle: "Merge Sort",
     algorithmURL: "/algorithms/merge-sort",
   },
+  {
+    algorithmTitle: "BFS",
+    algorithmURL: "/algorithms/bfs",
+  },
 ];
 
 export default algorithmMenuItems;
