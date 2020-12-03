@@ -1,4 +1,6 @@
 import {
+  CHANGE_EDGES,
+  CHANGE_NODES,
   CHANGE_SIZE,
   CHANGE_SPEED,
   OptionsActionTypes,
@@ -15,6 +17,20 @@ export const changeSpeed = (payload: number): OptionsActionTypes => {
 export const changeSize = (payload: number): OptionsActionTypes => {
   return {
     type: CHANGE_SIZE,
+    payload: payload,
+  };
+};
+
+export const changeNodes = (payload: number): OptionsActionTypes => {
+  return {
+    type: CHANGE_NODES,
+    payload: payload,
+  };
+};
+
+export const changeEdges = (payload: number): OptionsActionTypes => {
+  return {
+    type: CHANGE_EDGES,
     payload: payload,
   };
 };

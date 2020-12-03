@@ -1,9 +1,11 @@
+import { GraphNode } from "../components/visualizers/graph-canvas-types";
+
 interface Animation {
   action: "VISIT_NODE" | "VISIT_EDGE" | "DEQUEUE_NODE";
   index: number[];
 }
 
-const BFS = (graph: number[][]): Animation[] => {
+const bfs = (graph: GraphNode[]): Animation[] => {
   const animations: Animation[] = [];
 
   const queue: number[] = [];
@@ -20,22 +22,24 @@ const BFS = (graph: number[][]): Animation[] => {
     const node = queue.shift() as number;
     animations.push({ action: "DEQUEUE_NODE", index: [node] });
     col[node] = 2;
-    console.log(node);
 
-    for (let i = 0; i < graph[node].length; i++) {
+    for (let i = 0; i < graph[node].neighbor.length; i++) {
       console.log("hello");
 
-      if (col[graph[node][i]] === 0) {
-        console.log(graph[node][i]);
+      if (col[graph[node].neighbor[i]] === 0) {
+        console.log(graph[node].neighbor[i]);
 
         // visit node and edge
         animations.push({
           action: "VISIT_EDGE",
-          index: [node, graph[node][i]],
+          index: [node, graph[node].neighbor[i]],
         });
-        animations.push({ action: "VISIT_NODE", index: [graph[node][i]] });
-        queue.push(graph[node][i]);
-        col[graph[node][i]] = 1;
+        animations.push({
+          action: "VISIT_NODE",
+          index: [graph[node].neighbor[i]],
+        });
+        queue.push(graph[node].neighbor[i]);
+        col[graph[node].neighbor[i]] = 1;
       }
     }
   }
@@ -43,4 +47,4 @@ const BFS = (graph: number[][]): Animation[] => {
   return animations;
 };
 
-export default BFS;
+export default bfs;

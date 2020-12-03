@@ -256,8 +256,7 @@ const SortingVisualizer: React.FC = () => {
     if (state.visualizer.isRunning) {
       if (pathname.split("/")[2] === QUICK_SORT) {
         quickSortRun();
-      }
-      if (pathname.split("/")[2] === MERGE_SORT) {
+      } else if (pathname.split("/")[2] === MERGE_SORT) {
         mergeSortRun();
       }
     }

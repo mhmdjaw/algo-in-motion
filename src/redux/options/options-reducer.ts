@@ -1,4 +1,6 @@
 import {
+  CHANGE_EDGES,
+  CHANGE_NODES,
   CHANGE_SIZE,
   CHANGE_SPEED,
   OptionsActionTypes,
@@ -9,6 +11,8 @@ import {
 const initialState: OptionsState = {
   speed: 100,
   size: 310,
+  nodes: 12,
+  edges: 0,
 };
 
 const optionsReducer = (
@@ -28,10 +32,24 @@ const optionsReducer = (
         size: action.payload as number,
       };
 
+    case CHANGE_NODES:
+      return {
+        ...state,
+        nodes: action.payload as number,
+      };
+
+    case CHANGE_EDGES:
+      return {
+        ...state,
+        edges: action.payload as number,
+      };
+
     case RESET_OPTIONS:
       return {
         speed: 100,
         size: 310,
+        nodes: 12,
+        edges: 0,
       };
 
     default:

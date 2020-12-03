@@ -1,1 +1,6 @@
-export type { NodePosition, Edge } from "./graph-canvas-types";
+export type {
+  NodePosition,
+  Edge,
+  GraphNode,
+  Graph,
+} from "./graph-canvas-types";

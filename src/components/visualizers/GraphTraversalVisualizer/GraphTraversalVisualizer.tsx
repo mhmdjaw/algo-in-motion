@@ -6,12 +6,18 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Stage, Layer, Circle, Line } from "react-konva";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import BFS from "../../../algorithms/BFS";
 import { v4 as uuidv4 } from "uuid";
 import { randomNumberInterval } from "../../../heplers";
 import { OptionsState } from "../../../redux/options/options-types";
 import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
-import { Edge, NodePosition } from "../graph-canvas-types";
+import { Edge, NodePosition, Graph } from "../graph-canvas-types";
+import {
+  resetComplete,
+  resetVisualizer,
+  visualizationComplete,
+} from "../../../redux/visualizer/visualizer-actions";
+import { BFS } from "../../../algorithms/algorithm-types";
+import bfs from "../../../algorithms/bfs";
 
 interface RootState {
   visualizer: VisualizerState;
@@ -31,71 +37,40 @@ const GraphTraversalVisualizer: React.FC = () => {
     color.secondary.main,
   ];
 
-  const numberOfNodes = 20;
-  const numberOfEdges = 50;
-  const [graph, setGraph] = useState<Array<Array<number>>>([]); //double array
-  const [edges, setEdges] = useState<Array<Edge>>([]);
+  const numberOfNodes = state.options.nodes;
+  const maxNumberOfEdges = (numberOfNodes * (numberOfNodes - 1)) / 2;
+  const minNumberOfEdges = numberOfNodes - 1;
+  const numberOfEdges =
+    Math.floor(
+      (state.options.edges / 100) * (maxNumberOfEdges - minNumberOfEdges)
+    ) + minNumberOfEdges;
+  const animationSpeed = (1 - state.options.speed / 100) * 900 + 100;
+
+  const [graphState, setGraphState] = useState<Graph>({ graph: [], edges: [] });
+
   const edgeRef = useRef<Array<Array<Konva.Line | null>>>([]); //double array
   const nodeRef = useRef<Array<Konva.Circle | null>>([]);
   const initialPos = useRef<Array<NodePosition>>([]);
   const layer = useRef<Konva.Layer | null>(null);
   const timeouts = useRef<Array<NodeJS.Timeout>>([]);
 
-  const array = [];
-  array.push(0);
-  array.push(1);
-
-  const resetGraph = useCallback(() => {
-    timeouts.current.map((timeout) => clearTimeout(timeout));
-    initialPos.current = [];
-
-    const newGraph: number[][] = [];
-
-    for (let i = 0; i < numberOfNodes; i++) {
-      newGraph.push([]);
-      initialPos.current.push({
-        x: randomNumberInterval(20, 0.95 * window.innerWidth - 20),
-        y: randomNumberInterval(20, 0.8 * window.innerHeight - 20),
-      });
-    }
-
-    const newEdges = generateEdges();
-
-    console.log(newEdges);
-
-    for (let i = 0; i < newEdges.length; i++) {
-      newGraph[newEdges[i].from].push(newEdges[i].to);
-      newGraph[newEdges[i].to].push(newEdges[i].from);
-    }
-
-    nodeRef.current = new Array(newGraph.length);
-    edgeRef.current = new Array(newGraph.length);
-    for (let i = 0; i < newGraph.length; i++) {
-      edgeRef.current[i] = new Array(newGraph.length);
-    }
-    console.log(newGraph);
-
-    setGraph(newGraph);
-    setEdges(newEdges);
-  }, []);
-
-  const generateEdges = () => {
+  const generateEdges = useCallback(() => {
     const newEdges: Edge[] = [];
-    const allPossibleEdges = [];
+    const allPossibleEdges: Edge[] = [];
     const availableEdges = new Array(
       (numberOfNodes * (numberOfNodes - 1)) / 2
     ).fill(true);
 
     for (let i = 0; i < numberOfNodes; i++) {
       for (let j = i + 1; j < numberOfNodes; j++) {
-        allPossibleEdges.push({ from: i, to: j });
+        allPossibleEdges.push({ id: uuidv4(), from: i, to: j });
       }
     }
 
     for (let i = 1; i < numberOfNodes; i++) {
       const j = randomNumberInterval(0, i - 1);
 
-      newEdges.push({ from: j, to: i });
+      newEdges.push({ id: uuidv4(), from: j, to: i });
 
       const index = mapEdgesToIndices(j, i, numberOfNodes);
 
@@ -121,12 +96,51 @@ const GraphTraversalVisualizer: React.FC = () => {
     }
 
     return newEdges;
-  };
+  }, [numberOfNodes, numberOfEdges]);
 
-  const BFSRun = () => {
-    const animations = BFS(graph);
+  const resetGraph = useCallback(() => {
+    console.log("hello");
+
+    dispatch(resetComplete());
+    timeouts.current.map((timeout) => clearTimeout(timeout));
+    initialPos.current = [];
+
+    const newGraph: Graph = { graph: [], edges: [] };
+
+    for (let i = 0; i < numberOfNodes; i++) {
+      newGraph.graph.push({ id: uuidv4(), neighbor: [] });
+      initialPos.current.push({
+        x: randomNumberInterval(20, 0.95 * window.innerWidth - 20),
+        y: randomNumberInterval(20, 0.8 * window.innerHeight - 20),
+      });
+    }
+
+    newGraph.edges = generateEdges();
+
+    for (let i = 0; i < newGraph.edges.length; i++) {
+      newGraph.graph[newGraph.edges[i].from].neighbor.push(
+        newGraph.edges[i].to
+      );
+      newGraph.graph[newGraph.edges[i].to].neighbor.push(
+        newGraph.edges[i].from
+      );
+    }
+
+    edgeRef.current = new Array(40);
+    for (let i = 0; i < 40; i++) {
+      edgeRef.current[i] = new Array(40);
+      console.log(edgeRef.current.length);
+    }
+    nodeRef.current = new Array(newGraph.graph.length);
+
+    console.log(edgeRef.current.length);
+
+    setGraphState(newGraph);
+  }, [dispatch, generateEdges, numberOfNodes]);
+
+  const BFSRun = useCallback(() => {
+    const animations = bfs(graphState.graph);
     timeouts.current = new Array(animations.length + 1);
-    console.log(graph);
 
     animations.forEach((animation, index) => {
       switch (animation.action) {
@@ -137,7 +151,7 @@ const GraphTraversalVisualizer: React.FC = () => {
           timeouts.current[index] = setTimeout(() => {
             node?.fill(PRIMARY_COLOR);
             layer.current?.draw();
-          }, index * 200);
+          }, index * animationSpeed);
 
           break;
         }
@@ -149,7 +163,7 @@ const GraphTraversalVisualizer: React.FC = () => {
           timeouts.current[index] = setTimeout(() => {
             edgeRef.current[from][to]?.stroke(PRIMARY_COLOR);
             layer.current?.draw();
-          }, index * 200);
+          }, index * animationSpeed);
 
           break;
         }
@@ -160,7 +174,7 @@ const GraphTraversalVisualizer: React.FC = () => {
           timeouts.current[index] = setTimeout(() => {
             nodeRef.current[i]?.fill(SECONDARY_COLOR);
             layer.current?.draw();
-          }, index * 200);
+          }, index * animationSpeed);
 
           break;
         }
@@ -169,11 +183,38 @@ const GraphTraversalVisualizer: React.FC = () => {
           break;
       }
     });
-  };
+
+    timeouts.current[animations.length + 1] = setTimeout(() => {
+      dispatch(visualizationComplete());
+    }, animations.length * animationSpeed);
+  }, [
+    graphState.graph,
+    PRIMARY_COLOR,
+    SECONDARY_COLOR,
+    animationSpeed,
+    dispatch,
+  ]);
 
   useEffect(() => {
-    resetGraph();
-  }, [resetGraph]);
+    if (state.visualizer.isResetting) {
+      resetGraph();
+    }
+    if (state.visualizer.isRunning) {
+      if (pathname.split("/")[2] === BFS) {
+        BFSRun();
+      }
+    }
+  }, [
+    state.visualizer.isRunning,
+    state.visualizer.isResetting,
+    pathname,
+    BFSRun,
+    resetGraph,
+  ]);
+
+  useEffect(() => {
+    dispatch(resetVisualizer());
+  }, [dispatch, pathname, numberOfNodes, numberOfEdges, resetGraph]);
 
   const handleDragMove = (e: KonvaEventObject<DragEvent>) => {
     let newX = e.target.x();
@@ -199,7 +240,12 @@ const GraphTraversalVisualizer: React.FC = () => {
       newY = 0.8 * window.innerHeight - 20;
     }
 
-    graph[node].forEach((neighbor) => {
+    // update initial position to save it on rerender
+    initialPos.current[node].x = newX;
+    initialPos.current[node].y = newY;
+
+    // update all edges positions linked to this node
+    graphState.graph[node].neighbor.forEach((neighbor) => {
       const edge = edgeRef.current[node][neighbor];
       if (edge) {
         const points = edge.points();
@@ -225,9 +271,9 @@ const GraphTraversalVisualizer: React.FC = () => {
             width={0.95 * window.innerWidth}
           >
             <Layer ref={layer}>
-              {edges.map((edge) => (
+              {graphState.edges.map((edge) => (
                 <Line
-                  key={uuidv4()}
+                  key={edge.id}
                   ref={(el) =>
                     (edgeRef.current[edge.from][edge.to] = edgeRef.current[
                       edge.to
@@ -246,9 +292,9 @@ const GraphTraversalVisualizer: React.FC = () => {
                 />
               ))}
 
-              {graph.map((node, i) => (
+              {graphState.graph.map((node, i) => (
                 <Circle
-                  key={uuidv4()}
+                  key={node.id}
                   id={`${i}`}
                   ref={(el) => (nodeRef.current[i] = el)}
                   x={initialPos.current[i].x}

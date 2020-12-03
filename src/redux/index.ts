@@ -3,4 +3,9 @@ export {
   resetVisualizer,
 } from "./visualizer/visualizer-actions";
 
-export { changeSpeed, changeSize } from "./options/options-actions";
+export {
+  changeSpeed,
+  changeSize,
+  changeNodes,
+  changeEdges,
+} from "./options/options-actions";
