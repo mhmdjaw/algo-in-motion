@@ -25,7 +25,7 @@ const App: React.FC = () => {
         <Route path={["/algorithms/quick-sort", "/algorithms/merge-sort"]}>
           <SortingVisualizer />
         </Route>
-        <Route path="/algorithms/bfs">
+        <Route path={["/algorithms/bfs", "/algorithms/dfs"]}>
           <GraphTraversalVisualizer />
         </Route>
         <Description />

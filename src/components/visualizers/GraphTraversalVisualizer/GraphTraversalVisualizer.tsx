@@ -12,12 +12,12 @@ import { OptionsState } from "../../../redux/options/options-types";
 import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
 import { Edge, NodePosition, Graph } from "../graph-canvas-types";
 import {
-  resetComplete,
   resetVisualizer,
   visualizationComplete,
 } from "../../../redux/visualizer/visualizer-actions";
-import { BFS } from "../../../algorithms/algorithm-types";
+import { BFS, DFS } from "../../../algorithms/algorithm-types";
 import bfs from "../../../algorithms/bfs";
+import dfs from "../../../algorithms/dfs";
 
 interface RootState {
   visualizer: VisualizerState;
@@ -99,9 +99,6 @@ const GraphTraversalVisualizer: React.FC = () => {
   }, [numberOfNodes, numberOfEdges]);
 
   const resetGraph = useCallback(() => {
-    console.log("hello");
-
-    dispatch(resetComplete());
     timeouts.current.map((timeout) => clearTimeout(timeout));
     initialPos.current = [];
 
@@ -129,14 +126,11 @@ const GraphTraversalVisualizer: React.FC = () => {
     edgeRef.current = new Array(40);
     for (let i = 0; i < 40; i++) {
       edgeRef.current[i] = new Array(40);
-      console.log(edgeRef.current.length);
     }
     nodeRef.current = new Array(newGraph.graph.length);
 
-    console.log(edgeRef.current.length);
-
     setGraphState(newGraph);
-  }, [dispatch, generateEdges, numberOfNodes]);
+  }, [generateEdges, numberOfNodes]);
 
   const BFSRun = useCallback(() => {
     const animations = bfs(graphState.graph);
@@ -146,10 +140,9 @@ const GraphTraversalVisualizer: React.FC = () => {
       switch (animation.action) {
         case "VISIT_NODE": {
           const i = animation.index[0];
-          const node = nodeRef.current[i];
 
           timeouts.current[index] = setTimeout(() => {
-            node?.fill(PRIMARY_COLOR);
+            nodeRef.current[i]?.fill(PRIMARY_COLOR);
             layer.current?.draw();
           }, index * animationSpeed);
 
@@ -195,22 +188,90 @@ const GraphTraversalVisualizer: React.FC = () => {
     dispatch,
   ]);
 
+  const DFSRun = useCallback(() => {
+    const animations = dfs(graphState.graph);
+    timeouts.current = new Array(animations.length + 1);
+
+    animations.forEach((animation, index) => {
+      switch (animation.action) {
+        case "VISIT_NODE": {
+          const i = animation.index[0];
+
+          timeouts.current[index] = setTimeout(() => {
+            nodeRef.current[i]?.fill(PRIMARY_COLOR);
+            layer.current?.draw();
+          }, index * animationSpeed);
+
+          break;
+        }
+
+        case "VISIT_EDGE": {
+          const from = animation.index[0];
+          const to = animation.index[1];
+          const edge = edgeRef.current[from][to];
+
+          timeouts.current[index] = setTimeout(() => {
+            if (edge) edge.stroke(PRIMARY_COLOR);
+            layer.current?.draw();
+          }, index * animationSpeed);
+
+          break;
+        }
+
+        case "BACKTRACK_EDGE": {
+          const from = animation.index[0];
+          const to = animation.index[1];
+
+          timeouts.current[index] = setTimeout(() => {
+            edgeRef.current[from][to]?.stroke(SECONDARY_COLOR);
+            layer.current?.draw();
+          }, index * animationSpeed);
+
+          break;
+        }
+
+        case "BACKTRACK_NODE": {
+          const i = animation.index[0];
+
+          timeouts.current[index] = setTimeout(() => {
+            nodeRef.current[i]?.fill(SECONDARY_COLOR);
+            layer.current?.draw();
+          }, index * animationSpeed);
+
+          break;
+        }
+
+        default:
+          break;
+      }
+    });
+
+    timeouts.current[animations.length + 1] = setTimeout(() => {
+      dispatch(visualizationComplete());
+    }, animations.length * animationSpeed);
+  }, [
+    graphState.graph,
+    PRIMARY_COLOR,
+    SECONDARY_COLOR,
+    animationSpeed,
+    dispatch,
+  ]);
+
   useEffect(() => {
-    if (state.visualizer.isResetting) {
-      resetGraph();
-    }
     if (state.visualizer.isRunning) {
+      console.log("animation running");
+
       if (pathname.split("/")[2] === BFS) {
         BFSRun();
+      } else if (pathname.split("/")[2] === DFS) {
+        DFSRun();
       }
     }
-  }, [
-    state.visualizer.isRunning,
-    state.visualizer.isResetting,
-    pathname,
-    BFSRun,
-    resetGraph,
-  ]);
+  }, [state.visualizer.isRunning, pathname, BFSRun, DFSRun]);
+
+  useEffect(() => {
+    resetGraph();
+  }, [state.visualizer.resetToggle, resetGraph]);
 
   useEffect(() => {
     dispatch(resetVisualizer());
@@ -309,8 +370,6 @@ const GraphTraversalVisualizer: React.FC = () => {
           </Stage>
         </Paper>
       </Box>
-      <button onClick={resetGraph}>Generate a new graph</button>
-      <button onClick={BFSRun}>BFS</button>
     </>
   );
 };

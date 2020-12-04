@@ -1,6 +1,5 @@
 import { Action } from "@reduxjs/toolkit";
 import {
-  RESET_COMPLETE,
   RESET_VISUALIZER,
   RUN_VISUALIZER,
   CHANGE_VISUALIZER,
@@ -16,12 +15,6 @@ export const runVisualizer = (): Action => {
 export const resetVisualizer = (): Action => {
   return {
     type: RESET_VISUALIZER,
-  };
-};
-
-export const resetComplete = (): Action => {
-  return {
-    type: RESET_COMPLETE,
   };
 };
 

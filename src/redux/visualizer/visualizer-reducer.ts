@@ -1,6 +1,5 @@
 import { Action } from "@reduxjs/toolkit";
 import {
-  RESET_COMPLETE,
   RESET_VISUALIZER,
   RUN_VISUALIZER,
   CHANGE_VISUALIZER,
@@ -11,7 +10,7 @@ import {
 const initialState: VisualizerState = {
   isRunning: false,
   isGenerated: true,
-  isResetting: true,
+  resetToggle: false,
   isComplete: false,
 };
 
@@ -28,15 +27,11 @@ const visualizerReducer = (
     case RESET_VISUALIZER:
       return {
         ...state,
-        isResetting: true,
+        resetToggle: !state.resetToggle,
         isRunning: false,
         isComplete: false,
       };
-    case RESET_COMPLETE:
-      return {
-        ...state,
-        isResetting: false,
-      };
+
     case CHANGE_VISUALIZER:
       return {
         ...state,

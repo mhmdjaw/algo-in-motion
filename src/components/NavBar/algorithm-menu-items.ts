@@ -16,6 +16,10 @@ const algorithmMenuItems: AlgorithmMenuItem[] = [
     algorithmTitle: "BFS",
     algorithmURL: "/algorithms/bfs",
   },
+  {
+    algorithmTitle: "DFS",
+    algorithmURL: "/algorithms/dfs",
+  },
 ];
 
 export default algorithmMenuItems;

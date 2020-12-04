@@ -10,7 +10,7 @@ const bfs = (graph: GraphNode[]): Animation[] => {
 
   const queue: number[] = [];
 
-  const col: number[] = new Array(graph.length).fill(0);
+  const col = new Array(graph.length).fill(0);
 
   // visit the first node
   animations.push({ action: "VISIT_NODE", index: [0] });
@@ -29,7 +29,7 @@ const bfs = (graph: GraphNode[]): Animation[] => {
       if (col[graph[node].neighbor[i]] === 0) {
         console.log(graph[node].neighbor[i]);
 
-        // visit node and edge
+        // visit edge and neighbor
         animations.push({
           action: "VISIT_EDGE",
           index: [node, graph[node].neighbor[i]],

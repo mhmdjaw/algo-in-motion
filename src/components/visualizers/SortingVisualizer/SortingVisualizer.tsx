@@ -8,7 +8,6 @@ import { Box } from "@material-ui/core";
 import useSortingVisualizerStyles from "./sorting-visualizer-styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  resetComplete,
   resetVisualizer,
   visualizationComplete,
 } from "../../../redux/visualizer/visualizer-actions";
@@ -52,7 +51,6 @@ const SortingVisualizer: React.FC = () => {
   const width = totalBarWidths / range;
 
   const resetArray = useCallback(() => {
-    dispatch(resetComplete());
     timeouts.current.map((timeout) => clearTimeout(timeout));
 
     const newArray: Array<ArrayNumber> = [];
@@ -66,7 +64,7 @@ const SortingVisualizer: React.FC = () => {
 
     barRef.current = new Array(newArray.length);
     setArray(newArray);
-  }, [dispatch, range]);
+  }, [range]);
 
   const quickSortRun = useCallback(() => {
     const animations = quickSort(array);
@@ -250,24 +248,20 @@ const SortingVisualizer: React.FC = () => {
   }, [array, animationSpeed, PRIMARY_COLOR, SECONDARY_COLOR, dispatch]);
 
   useEffect(() => {
-    if (state.visualizer.isResetting) {
-      resetArray();
-    }
     if (state.visualizer.isRunning) {
+      console.log("animation Running");
+
       if (pathname.split("/")[2] === QUICK_SORT) {
         quickSortRun();
       } else if (pathname.split("/")[2] === MERGE_SORT) {
         mergeSortRun();
       }
     }
-  }, [
-    state.visualizer.isRunning,
-    state.visualizer.isResetting,
-    pathname,
-    quickSortRun,
-    mergeSortRun,
-    resetArray,
-  ]);
+  }, [state.visualizer.isRunning, pathname, quickSortRun, mergeSortRun]);
+
+  useEffect(() => {
+    resetArray();
+  }, [state.visualizer.resetToggle, resetArray]);
 
   useEffect(() => {
     dispatch(resetVisualizer());

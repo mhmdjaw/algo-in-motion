@@ -8,7 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeSize, changeSpeed, changeNodes, changeEdges } from "../../redux";
 import { VisualizerState } from "../../redux/visualizer/visualizer-types";
 import { useParams } from "react-router-dom";
-import { BFS, MERGE_SORT, QUICK_SORT } from "../../algorithms/algorithm-types";
+import {
+  BFS,
+  DFS,
+  MERGE_SORT,
+  QUICK_SORT,
+} from "../../algorithms/algorithm-types";
 
 interface rootState {
   options: OptionsState;
@@ -16,8 +21,8 @@ interface rootState {
 }
 
 const sizeAlgorithms = [QUICK_SORT, MERGE_SORT];
-const nodesAlgorithms = [BFS];
-const edgesAlgorithms = [BFS];
+const nodesAlgorithms = [BFS, DFS];
+const edgesAlgorithms = [BFS, DFS];
 
 const Options: React.FC = () => {
   const classes = useOptionsStyles();
