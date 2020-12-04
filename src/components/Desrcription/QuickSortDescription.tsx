@@ -28,7 +28,7 @@ const QuickSortDescription: React.FC = () => {
           O(n<sup>2</sup>)
         </em>{" "}
         in the worst case. However, on average it has the best sorting
-        performance which is the reasong why it is considered the{" "}
+        performance which is the reason why it is considered the{" "}
         <strong className={classes.emp}>fastest </strong>
         sorting algorithm.
         <br />

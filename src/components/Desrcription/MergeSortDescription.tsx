@@ -34,9 +34,9 @@ const MergeSortDescription: React.FC = () => {
         <br />
         Merge Sort is based on the idea of dividing the list in two halves
         recursively until there is only one element in each sublist. At this
-        point, each sublist is considered to be sorted. Then comes the process
-        of merging back two sorted sublists at a time until the main list is
-        completely sorted.
+        point, each sublist is considered to be sorted. After that comes the
+        process of merging back two sorted sublists at a time until the main
+        list is completely sorted.
       </Typography>
     </>
   );

@@ -1,9 +1,16 @@
 import React from "react";
 import { Box, Container, Paper } from "@material-ui/core";
 import { useParams } from "react-router-dom";
-import { MERGE_SORT, QUICK_SORT } from "../../algorithms/algorithm-types";
+import {
+  BFS,
+  DFS,
+  MERGE_SORT,
+  QUICK_SORT,
+} from "../../algorithms/algorithm-types";
 import QuickSortDescription from "./QuickSortDescription";
 import MergeSortDescription from "./MergeSortDescription";
+import BFSDescription from "./BFSDescription";
+import DFSDescription from "./DFSDescription";
 import useDescriptionStyles from "./description-styles";
 
 const Description: React.FC = () => {
@@ -16,6 +23,8 @@ const Description: React.FC = () => {
         <Paper className={classes.paper} elevation={7}>
           {algorithm === QUICK_SORT && <QuickSortDescription />}
           {algorithm === MERGE_SORT && <MergeSortDescription />}
+          {algorithm === BFS && <BFSDescription />}
+          {algorithm === DFS && <DFSDescription />}
         </Paper>
       </Box>
     </Container>
