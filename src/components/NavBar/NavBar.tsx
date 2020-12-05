@@ -10,7 +10,7 @@ import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import ReplayIcon from "@material-ui/icons/Replay";
 import Slide from "@material-ui/core/Slide";
 import { Button, IconButton, Menu, MenuItem } from "@material-ui/core";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import useNavBarStyles from "./nav-bar-styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,7 +45,6 @@ const NavBar: React.FC<Props> = (props: Props) => {
   const state = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { algorithm } = useParams<{ algorithm: string }>();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -89,7 +88,12 @@ const NavBar: React.FC<Props> = (props: Props) => {
               startIcon={<LogoIcon />}
               endIcon={<ExpandMoreIcon />}
             >
-              {algorithm}
+              {algorithmMenuItems.map((menuItem) => {
+                const { algorithmTitle, algorithmURL } = menuItem;
+                if (algorithmURL === pathname) {
+                  return algorithmTitle;
+                }
+              })}
             </Button>
             <Menu
               id="algorithm-menu"
