@@ -8,4 +8,5 @@ export {
   changeSize,
   changeNodes,
   changeEdges,
+  changePoints,
 } from "./options/options-actions";

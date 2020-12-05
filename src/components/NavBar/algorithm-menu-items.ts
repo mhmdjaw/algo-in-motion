@@ -20,6 +20,10 @@ const algorithmMenuItems: AlgorithmMenuItem[] = [
     algorithmTitle: "DFS",
     algorithmURL: "/algorithms/dfs",
   },
+  {
+    algorithmTitle: "Times Tables",
+    algorithmURL: "/algorithms/times-tables",
+  },
 ];
 
 export default algorithmMenuItems;

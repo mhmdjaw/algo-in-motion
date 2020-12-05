@@ -259,8 +259,6 @@ const GraphTraversalVisualizer: React.FC = () => {
 
   useEffect(() => {
     if (state.visualizer.isRunning) {
-      console.log("animation running");
-
       if (pathname.split("/")[2] === BFS) {
         BFSRun();
       } else if (pathname.split("/")[2] === DFS) {

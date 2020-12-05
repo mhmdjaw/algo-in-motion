@@ -1,1 +1,1 @@
-export { randomNumberInterval } from "./helpers";
+export { randomNumberInterval, getGradientColor } from "./helpers";
