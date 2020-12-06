@@ -24,6 +24,10 @@ const algorithmMenuItems: AlgorithmMenuItem[] = [
     algorithmTitle: "Times Tables",
     algorithmURL: "/algorithms/times-tables",
   },
+  {
+    algorithmTitle: "Traveling Salesman",
+    algorithmURL: "/algorithms/traveling-salesman",
+  },
 ];
 
 export default algorithmMenuItems;

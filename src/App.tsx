@@ -12,6 +12,7 @@ import Options from "./components/Options";
 import Description from "./components/Desrcription";
 import GraphTraversalVisualizer from "./components/visualizers/GraphTraversalVisualizer";
 import TimesTablesVisualizer from "./components/visualizers/TimesTablesVisualizer";
+import TravelingSalesman from "./components/visualizers/TravelingSalesman";
 
 const App: React.FC = () => {
   return (
@@ -31,6 +32,9 @@ const App: React.FC = () => {
         </Route>
         <Route path="/algorithms/times-tables">
           <TimesTablesVisualizer />
+        </Route>
+        <Route path="/algorithms/traveling-salesman">
+          <TravelingSalesman />
         </Route>
         <Description />
       </Route>

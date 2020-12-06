@@ -29,15 +29,21 @@ const landingPageAnimationVariants = {
 
   leftContainerVariants: {
     hidden: {
-      opacity: 0,
-      y: "10%",
+      // opacity: 0,
+      // y: "10%",
     },
     visible: (i: number): Record<string, unknown> => ({
-      opacity: 1,
-      y: "0%",
+      // opacity: 1,
+      // y: "0%",
+      // transition: {
+      //   delay: i * 0.2 + 1.5,
+      //   duration: (i + 1) * 0.3,
+      //   ease: "easeInOut",
+      // },
+      opacity: [0, 0, 0, 1],
+      y: ["10%", "10%", "10%", "0%"],
       transition: {
-        delay: i * 0.2 + 1.5,
-        duration: (i + 1) * 0.3,
+        duration: 2 + 0.3 * (i + 1),
         ease: "easeInOut",
       },
     }),

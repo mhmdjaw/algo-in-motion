@@ -318,57 +318,55 @@ const GraphTraversalVisualizer: React.FC = () => {
   };
 
   return (
-    <>
-      <Box
-        height={0.8 * window.innerHeight}
-        width={0.95 * window.innerWidth}
-        mx="auto"
-      >
-        <Paper>
-          <Stage
-            height={0.8 * window.innerHeight}
-            width={0.95 * window.innerWidth}
-          >
-            <Layer ref={layer}>
-              {graphState.edges.map((edge) => (
-                <Line
-                  key={edge.id}
-                  ref={(el) =>
-                    (edgeRef.current[edge.from][edge.to] = edgeRef.current[
-                      edge.to
-                    ][edge.from] = el)
-                  }
-                  name={`${edge.from}`}
-                  x={0} //nodeRef.current[edge.from].x()}
-                  y={0}
-                  points={[
-                    initialPos.current[edge.from].x,
-                    initialPos.current[edge.from].y,
-                    initialPos.current[edge.to].x,
-                    initialPos.current[edge.to].y,
-                  ]}
-                  stroke="white"
-                />
-              ))}
+    <Box
+      height={0.8 * window.innerHeight}
+      width={0.95 * window.innerWidth}
+      mx="auto"
+    >
+      <Paper>
+        <Stage
+          height={0.8 * window.innerHeight}
+          width={0.95 * window.innerWidth}
+        >
+          <Layer ref={layer}>
+            {graphState.edges.map((edge) => (
+              <Line
+                key={edge.id}
+                ref={(el) =>
+                  (edgeRef.current[edge.from][edge.to] = edgeRef.current[
+                    edge.to
+                  ][edge.from] = el)
+                }
+                name={`${edge.from}`}
+                x={0} //nodeRef.current[edge.from].x()}
+                y={0}
+                points={[
+                  initialPos.current[edge.from].x,
+                  initialPos.current[edge.from].y,
+                  initialPos.current[edge.to].x,
+                  initialPos.current[edge.to].y,
+                ]}
+                stroke="white"
+              />
+            ))}
 
-              {graphState.graph.map((node, i) => (
-                <Circle
-                  key={node.id}
-                  id={`${i}`}
-                  ref={(el) => (nodeRef.current[i] = el)}
-                  x={initialPos.current[i].x}
-                  y={initialPos.current[i].y}
-                  radius={20}
-                  fill="white"
-                  draggable
-                  onDragMove={handleDragMove}
-                />
-              ))}
-            </Layer>
-          </Stage>
-        </Paper>
-      </Box>
-    </>
+            {graphState.graph.map((node, i) => (
+              <Circle
+                key={node.id}
+                id={`${i}`}
+                ref={(el) => (nodeRef.current[i] = el)}
+                x={initialPos.current[i].x}
+                y={initialPos.current[i].y}
+                radius={20}
+                fill="white"
+                draggable
+                onDragMove={handleDragMove}
+              />
+            ))}
+          </Layer>
+        </Stage>
+      </Paper>
+    </Box>
   );
 };
 

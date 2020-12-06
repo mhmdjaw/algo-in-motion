@@ -18,3 +18,9 @@ export interface Graph {
   graph: GraphNode[];
   edges: Edge[];
 }
+
+export interface Cities {
+  cities: string[];
+  edgesPossibility: string[];
+  edgesSolution: string[];
+}
