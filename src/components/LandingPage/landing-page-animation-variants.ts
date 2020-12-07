@@ -29,8 +29,8 @@ const landingPageAnimationVariants = {
 
   leftContainerVariants: {
     hidden: {
-      // opacity: 0,
-      // y: "10%",
+      opacity: 0,
+      y: "10%",
     },
     visible: (i: number): Record<string, unknown> => ({
       // opacity: 1,

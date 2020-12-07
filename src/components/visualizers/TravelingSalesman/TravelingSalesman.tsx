@@ -136,7 +136,7 @@ const TravelingSalesman: React.FC = () => {
                   const x2 = cityRef.current[nextCity]?.x() as number;
                   const y2 = cityRef.current[nextCity]?.y() as number;
                   edgePossRef.current[i]?.points([x1, y1, x2, y2]);
-                  edgePossPos.current[i] = { x1, y1, x2, y2 };
+                  // edgePossPos.current[i] = { x1, y1, x2, y2 };
                   edgePossRef.current[i]?.stroke(SECONDARY_COLOR);
                   layer.current?.draw();
                 }
@@ -201,7 +201,7 @@ const TravelingSalesman: React.FC = () => {
                 const x2 = cityRef.current[nextCity]?.x() as number;
                 const y2 = cityRef.current[nextCity]?.y() as number;
                 edgePossRef.current[i]?.points([x1, y1, x2, y2]);
-                edgePossPos.current[i] = { x1, y1, x2, y2 };
+                // edgePossPos.current[i] = { x1, y1, x2, y2 };
                 edgePossRef.current[i]?.stroke(SECONDARY_COLOR);
                 layer.current?.draw();
               }
