@@ -9,4 +9,5 @@ export {
   changeNodes,
   changeEdges,
   changePoints,
+  changeCities,
 } from "./options/options-actions";

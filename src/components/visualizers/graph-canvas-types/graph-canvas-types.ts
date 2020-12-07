@@ -9,6 +9,13 @@ export interface Edge {
   to: number;
 }
 
+export interface EdgePosition {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
+
 export interface GraphNode {
   id: string;
   neighbor: number[];

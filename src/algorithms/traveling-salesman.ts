@@ -35,10 +35,9 @@ const tsm = (
     if (distance < minDistance) {
       // current best path
       minDistance = distance;
-      sol = currentPath.slice();
       animations.push({
         action: "CURRENT_SOLUTION",
-        index: sol.concat(currentPath),
+        index: currentPath.slice(),
       });
     }
   } else if (currentPath.length === 0) {

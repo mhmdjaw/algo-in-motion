@@ -1,4 +1,5 @@
 import {
+  CHANGE_CITIES,
   CHANGE_EDGES,
   CHANGE_NODES,
   CHANGE_POINTS,
@@ -39,6 +40,13 @@ export const changeEdges = (payload: number): OptionsActionTypes => {
 export const changePoints = (payload: number): OptionsActionTypes => {
   return {
     type: CHANGE_POINTS,
+    payload: payload,
+  };
+};
+
+export const changeCities = (payload: number): OptionsActionTypes => {
+  return {
+    type: CHANGE_CITIES,
     payload: payload,
   };
 };

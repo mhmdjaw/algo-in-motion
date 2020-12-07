@@ -11,6 +11,7 @@ import {
   changeNodes,
   changeEdges,
   changePoints,
+  changeCities,
 } from "../../redux";
 import { VisualizerState } from "../../redux/visualizer/visualizer-types";
 import { useParams } from "react-router-dom";
@@ -20,6 +21,7 @@ import {
   MERGE_SORT,
   QUICK_SORT,
   TIMES_TABLES,
+  TRAVELING_SALESMAN,
 } from "../../algorithms/algorithm-types";
 
 interface rootState {
@@ -41,6 +43,7 @@ const Options: React.FC = () => {
   const nodes = nodesAlgorithms.some((algo) => algo === algorithm);
   const edges = edgesAlgorithms.some((algo) => algo === algorithm);
   const points = TIMES_TABLES === algorithm;
+  const cities = TRAVELING_SALESMAN === algorithm;
 
   const handleChange = (name: string) => (
     event: ChangeEvent<Record<string, unknown>>,
@@ -63,6 +66,10 @@ const Options: React.FC = () => {
 
       case "points":
         dispatch(changePoints(value));
+        break;
+
+      case "cities":
+        dispatch(changeCities(value));
         break;
 
       case "speed":
@@ -153,6 +160,24 @@ const Options: React.FC = () => {
               min={10}
               max={200}
               aria-labelledby="points-slider"
+            />
+          </Box>
+        )}
+        {cities && (
+          <Box width="20%" display="flex" alignItems="center">
+            <Typography className={classes.typographyItems} variant="body2">
+              CITIES
+            </Typography>
+            <Slider
+              className={classes.sliderItems}
+              value={state.options.cities}
+              onChange={handleChange("cities")}
+              valueLabelDisplay="auto"
+              step={1}
+              marks
+              min={3}
+              max={9}
+              aria-labelledby="cities-slider"
             />
           </Box>
         )}

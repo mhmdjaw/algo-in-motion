@@ -1,4 +1,5 @@
 import {
+  CHANGE_CITIES,
   CHANGE_EDGES,
   CHANGE_NODES,
   CHANGE_POINTS,
@@ -15,6 +16,7 @@ const initialState: OptionsState = {
   nodes: 12,
   edges: 0,
   points: 200,
+  cities: 8,
 };
 
 const optionsReducer = (
@@ -52,6 +54,12 @@ const optionsReducer = (
         points: action.payload as number,
       };
 
+    case CHANGE_CITIES:
+      return {
+        ...state,
+        cities: action.payload as number,
+      };
+
     case RESET_OPTIONS:
       return {
         speed: 100,
@@ -59,6 +67,7 @@ const optionsReducer = (
         nodes: 12,
         edges: 0,
         points: 200,
+        cities: 8,
       };
 
     default:
