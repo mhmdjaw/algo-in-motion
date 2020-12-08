@@ -28,6 +28,10 @@ const algorithmMenuItems: AlgorithmMenuItem[] = [
     algorithmTitle: "Traveling Salesman",
     algorithmURL: "/algorithms/traveling-salesman",
   },
+  {
+    algorithmTitle: "A* Pathfinding",
+    algorithmURL: "/algorithms/A-star-pathfinding",
+  },
 ];
 
 export default algorithmMenuItems;

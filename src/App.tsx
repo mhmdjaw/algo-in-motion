@@ -13,6 +13,7 @@ import Description from "./components/Desrcription";
 import GraphTraversalVisualizer from "./components/visualizers/GraphTraversalVisualizer";
 import TimesTablesVisualizer from "./components/visualizers/TimesTablesVisualizer";
 import TravelingSalesman from "./components/visualizers/TravelingSalesman";
+import PathfindingVisualizer from "./components/visualizers/PathfindingVisualizer";
 
 const App: React.FC = () => {
   return (
@@ -35,6 +36,9 @@ const App: React.FC = () => {
         </Route>
         <Route path="/algorithms/traveling-salesman">
           <TravelingSalesman />
+        </Route>
+        <Route path="/algorithms/A-star-pathfinding">
+          <PathfindingVisualizer />
         </Route>
         <Description />
       </Route>

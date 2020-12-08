@@ -16,7 +16,7 @@ import { OptionsState } from "../../../redux/options/options-types";
 import { useLocation } from "react-router-dom";
 import { MERGE_SORT, QUICK_SORT } from "../../../algorithms/algorithm-types";
 import { randomNumberInterval } from "../../../heplers";
-import { testTSM } from "../../../algorithms/traveling-salesman";
+import { testMaze } from "../../../algorithms/maze-generation";
 
 interface RootState {
   visualizer: VisualizerState;
@@ -312,7 +312,7 @@ const SortingVisualizer: React.FC = () => {
       {/* <button onClick={resetArray}>Generate a new array</button>
       <button onClick={mergeSortRun}>merge sort</button> */}
       {/* <button onClick={testSortingAlgorithm}>test</button> */}
-      <button onClick={testTSM}>test tsm</button>
+      <button onClick={testMaze}>test maze</button>
     </>
   );
 };
