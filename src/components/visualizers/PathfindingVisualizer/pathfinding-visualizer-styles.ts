@@ -10,11 +10,6 @@ const usePathfindingVisualizerStyles = makeStyles({
     margin: "0 auto",
     backgroundColor: "black",
   },
-  cell: {
-    // height: "7px",
-    // width: "7px",
-    backgroundColor: "black",
-  },
 });
 
 export default usePathfindingVisualizerStyles;
