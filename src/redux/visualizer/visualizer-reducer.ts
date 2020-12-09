@@ -11,7 +11,7 @@ import {
 
 const initialState: VisualizerState = {
   isRunning: false,
-  isGenerating: true,
+  isGenerating: false,
   resetToggle: false,
   isComplete: false,
 };

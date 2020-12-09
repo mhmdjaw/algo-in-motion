@@ -8,7 +8,11 @@ import { useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
 import { OptionsState } from "../../../redux/options/options-types";
-import { generateVisualizer, generationComplete } from "../../../redux";
+import {
+  generateVisualizer,
+  generationComplete,
+  visualizationComplete,
+} from "../../../redux";
 
 interface RootState {
   visualizer: VisualizerState;
@@ -146,21 +150,17 @@ const PathfindingVisualizer: React.FC = () => {
         timeoutsChunks.current[chunks + 2] = setTimeout(() => {
           dispatch(generationComplete());
         }, (animations.length + 1) * animationSpeed + 5);
-
-        console.log(generatedMaze);
       }
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [maze, dispatch]
   );
 
   const pathfindingRun = useCallback(() => {
-    console.log(generatedMaze.current);
-
     const animations = pathfinding(generatedMaze.current);
 
     timeouts.current = new Array(animations.length);
     const chunks = Math.floor(animations.length / 1000);
-    timeoutsChunks.current = new Array(chunks + 3);
+    timeoutsChunks.current = new Array(chunks + 2);
 
     for (let t = 0; t < chunks; t++) {
       timeoutsChunks.current[t] = setTimeout(() => {
@@ -232,7 +232,11 @@ const PathfindingVisualizer: React.FC = () => {
         count++;
       }
     }, chunks * 1000 * animationSpeed);
-  }, [PRIMARY_COLOR, SECONDARY_COLOR, animationSpeed]);
+
+    timeoutsChunks.current[chunks + 1] = setTimeout(() => {
+      dispatch(visualizationComplete());
+    }, animations.length * animationSpeed + 5);
+  }, [PRIMARY_COLOR, SECONDARY_COLOR, animationSpeed, dispatch]);
 
   useEffect(() => {
     if (state.visualizer.isRunning) {
