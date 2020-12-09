@@ -1,12 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import usePathfindingVisualizerStyles from "./pathfinding-visualizer-styles";
 import { Cell } from "./pathfinding-visualizer-types";
 import { v4 as uuidv4 } from "uuid";
 import mazeGeneration from "../../../algorithms/maze-generation";
 import pathfinding from "../../../algorithms/pathfinding";
 import { useTheme } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
+import { OptionsState } from "../../../redux/options/options-types";
+import { generateVisualizer, generationComplete } from "../../../redux";
+
+interface RootState {
+  visualizer: VisualizerState;
+  options: OptionsState;
+}
 
 const PathfindingVisualizer: React.FC = () => {
+  const state = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
+
   const classes = usePathfindingVisualizerStyles();
   const theme = useTheme();
   const color = theme.palette;
@@ -24,7 +36,7 @@ const PathfindingVisualizer: React.FC = () => {
   const generatedMaze = useRef<Array<Array<number>>>([]);
   const cellColor = useRef<Array<Array<string>>>([]);
 
-  const animationSpeed = 5;
+  const animationSpeed = (1 - state.options.speed / 100) * 195 + 5;
 
   const resetMaze = () => {
     timeoutsChunks.current.map((timeout) => clearTimeout(timeout));
@@ -65,20 +77,45 @@ const PathfindingVisualizer: React.FC = () => {
     setMaze(newMaze);
   };
 
-  useEffect(() => {
-    if (maze.length !== 0) {
-      const mazeCopy = maze.slice();
-      const animations = mazeGeneration(mazeCopy);
+  useEffect(
+    () => {
+      if (maze.length !== 0) {
+        dispatch(generateVisualizer());
+        const mazeCopy = maze.slice();
+        const animations = mazeGeneration(mazeCopy);
 
-      timeouts.current = new Array(animations.length);
-      const chunks = Math.floor(animations.length / 1000);
-      timeoutsChunks.current = new Array(chunks + 3);
+        timeouts.current = new Array(animations.length);
+        const chunks = Math.floor(animations.length / 1000);
+        timeoutsChunks.current = new Array(chunks + 3);
 
-      for (let t = 0; t < chunks; t++) {
-        timeoutsChunks.current[t] = setTimeout(() => {
-          timeouts.current = new Array(1000);
+        for (let t = 0; t < chunks; t++) {
+          timeoutsChunks.current[t] = setTimeout(() => {
+            timeouts.current = new Array(1000);
+            let count = 0;
+            for (let index = t * 1000; index < (t + 1) * 1000; index++) {
+              const animation = animations[index];
+              timeouts.current[count] = setTimeout(() => {
+                const { row, col } = animation;
+                const cell = mazeRef.current[row][col]?.style;
+                if (cell) cell.background = "white";
+                cellColor.current[row][col] = "white";
+              }, count * animationSpeed);
+              count++;
+            }
+          }, t * 1000 * animationSpeed);
+        }
+
+        const lastChunk = animations.length % 1000;
+        timeouts.current = new Array(lastChunk);
+
+        //repetitive code to repeat the entire process on the last chunk
+        timeoutsChunks.current[chunks] = setTimeout(() => {
           let count = 0;
-          for (let index = t * 1000; index < (t + 1) * 1000; index++) {
+          for (
+            let index = animations.length - lastChunk;
+            index < animations.length;
+            index++
+          ) {
             const animation = animations[index];
             timeouts.current[count] = setTimeout(() => {
               const { row, col } = animation;
@@ -88,50 +125,35 @@ const PathfindingVisualizer: React.FC = () => {
             }, count * animationSpeed);
             count++;
           }
-        }, t * 1000 * animationSpeed);
+        }, chunks * 1000 * animationSpeed);
+
+        timeoutsChunks.current[chunks + 1] = setTimeout(() => {
+          //color end cell redd
+          const endCell = mazeRef.current[0][mazeSize.current.cols - 1]?.style;
+          if (endCell) endCell.background = "red";
+          cellColor.current[0][mazeSize.current.cols - 1] = "red";
+          // color first cell green
+          const startCell =
+            mazeRef.current[mazeSize.current.rows - 1][0]?.style;
+          if (startCell) startCell.background = "lime";
+          cellColor.current[mazeSize.current.rows - 1][0] = "lime";
+        }, animations.length * animationSpeed + 5);
+
+        generatedMaze.current = mazeCopy.map((row) =>
+          row.map((cell) => cell.color)
+        );
+
+        timeoutsChunks.current[chunks + 2] = setTimeout(() => {
+          dispatch(generationComplete());
+        }, (animations.length + 1) * animationSpeed + 5);
+
+        console.log(generatedMaze);
       }
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [maze, dispatch]
+  );
 
-      const lastChunk = animations.length % 1000;
-      timeouts.current = new Array(lastChunk);
-
-      //repetitive code to repeat the entire process on the last chunk
-      timeoutsChunks.current[chunks] = setTimeout(() => {
-        let count = 0;
-        for (
-          let index = animations.length - lastChunk;
-          index < animations.length;
-          index++
-        ) {
-          const animation = animations[index];
-          timeouts.current[count] = setTimeout(() => {
-            const { row, col } = animation;
-            const cell = mazeRef.current[row][col]?.style;
-            if (cell) cell.background = "white";
-            cellColor.current[row][col] = "white";
-          }, count * animationSpeed);
-          count++;
-        }
-      }, chunks * 1000 * animationSpeed);
-
-      timeoutsChunks.current[chunks + 1] = setTimeout(() => {
-        //color end cell redd
-        const endCell = mazeRef.current[0][mazeSize.current.cols - 1]?.style;
-        if (endCell) endCell.background = "red";
-        cellColor.current[0][mazeSize.current.cols - 1] = "red";
-        // color first cell green
-        const startCell = mazeRef.current[mazeSize.current.rows - 1][0]?.style;
-        if (startCell) startCell.background = "lime";
-        cellColor.current[mazeSize.current.rows - 1][0] = "lime";
-      }, animations.length * animationSpeed + 5);
-
-      generatedMaze.current = mazeCopy.map((row) =>
-        row.map((cell) => cell.color)
-      );
-      console.log(generatedMaze);
-    }
-  }, [maze]);
-
-  const pathfindingRun = () => {
+  const pathfindingRun = useCallback(() => {
     console.log(generatedMaze.current);
 
     const animations = pathfinding(generatedMaze.current);
@@ -210,41 +232,44 @@ const PathfindingVisualizer: React.FC = () => {
         count++;
       }
     }, chunks * 1000 * animationSpeed);
-  };
+  }, [PRIMARY_COLOR, SECONDARY_COLOR, animationSpeed]);
+
+  useEffect(() => {
+    if (state.visualizer.isRunning) {
+      pathfindingRun();
+    }
+  }, [state.visualizer.isRunning, pathfindingRun]);
 
   useEffect(() => {
     resetMaze();
-  }, []);
+  }, [state.visualizer.resetToggle]);
 
   return (
-    <>
-      <div
-        className={classes.grid}
-        style={{
-          gridTemplateColumns: `repeat(${mazeSize.current.cols}, 0fr)`,
-          padding: `${cellSize.current}px`,
-          width: `${cellSize.current * (mazeSize.current.cols + 2)}px`,
-          height: `${cellSize.current * (mazeSize.current.rows + 2)}px`,
-        }}
-      >
-        {maze.map((row, i) => {
-          return row.map((col, j) => {
-            return (
-              <div
-                key={col.id}
-                ref={(el) => (mazeRef.current[i][j] = el)}
-                style={{
-                  height: `${cellSize.current}px`,
-                  width: `${cellSize.current}px`,
-                  backgroundColor: `${cellColor.current[i][j]}`,
-                }}
-              ></div>
-            );
-          });
-        })}
-      </div>
-      <button onClick={pathfindingRun}>test pathfinding</button>
-    </>
+    <div
+      className={classes.grid}
+      style={{
+        gridTemplateColumns: `repeat(${mazeSize.current.cols}, 0fr)`,
+        padding: `${cellSize.current}px`,
+        width: `${cellSize.current * (mazeSize.current.cols + 2)}px`,
+        height: `${cellSize.current * (mazeSize.current.rows + 2)}px`,
+      }}
+    >
+      {maze.map((row, i) => {
+        return row.map((col, j) => {
+          return (
+            <div
+              key={col.id}
+              ref={(el) => (mazeRef.current[i][j] = el)}
+              style={{
+                height: `${cellSize.current}px`,
+                width: `${cellSize.current}px`,
+                backgroundColor: `${cellColor.current[i][j]}`,
+              }}
+            ></div>
+          );
+        });
+      })}
+    </div>
   );
 };
 

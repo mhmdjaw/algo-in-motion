@@ -7,10 +7,7 @@ import { ArrayNumber } from "./sorting-visualizer-types";
 import { Box } from "@material-ui/core";
 import useSortingVisualizerStyles from "./sorting-visualizer-styles";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  resetVisualizer,
-  visualizationComplete,
-} from "../../../redux/visualizer/visualizer-actions";
+import { resetVisualizer, visualizationComplete } from "../../../redux";
 import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
 import { OptionsState } from "../../../redux/options/options-types";
 import { useLocation } from "react-router-dom";
@@ -312,7 +309,6 @@ const SortingVisualizer: React.FC = () => {
       {/* <button onClick={resetArray}>Generate a new array</button>
       <button onClick={mergeSortRun}>merge sort</button> */}
       {/* <button onClick={testSortingAlgorithm}>test</button> */}
-      <button onClick={testMaze}>test maze</button>
     </>
   );
 };

@@ -15,10 +15,7 @@ import travelingSalesman from "../../../algorithms/traveling-salesman";
 import { useDispatch, useSelector } from "react-redux";
 import { OptionsState } from "../../../redux/options/options-types";
 import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
-import {
-  resetVisualizer,
-  visualizationComplete,
-} from "../../../redux/visualizer/visualizer-actions";
+import { resetVisualizer, visualizationComplete } from "../../../redux";
 
 interface RootState {
   visualizer: VisualizerState;

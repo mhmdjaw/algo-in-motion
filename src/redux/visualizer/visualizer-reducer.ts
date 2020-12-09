@@ -5,11 +5,13 @@ import {
   CHANGE_VISUALIZER,
   VisualizerState,
   VISUALIZATION_COMPLETE,
+  GENERATE_VISUALIZER,
+  GENERATION_COMPLETE,
 } from "./visualizer-types";
 
 const initialState: VisualizerState = {
   isRunning: false,
-  isGenerated: true,
+  isGenerating: true,
   resetToggle: false,
   isComplete: false,
 };
@@ -45,6 +47,19 @@ const visualizerReducer = (
         isComplete: true,
         isRunning: false,
       };
+
+    case GENERATE_VISUALIZER:
+      return {
+        ...state,
+        isGenerating: true,
+      };
+
+    case GENERATION_COMPLETE:
+      return {
+        ...state,
+        isGenerating: false,
+      };
+
     default:
       return state;
   }

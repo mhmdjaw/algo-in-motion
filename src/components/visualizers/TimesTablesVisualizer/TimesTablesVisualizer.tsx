@@ -8,8 +8,7 @@ import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
 import { OptionsState } from "../../../redux/options/options-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@material-ui/core/styles";
-import { resetVisualizer } from "../../../redux";
-import { visualizationComplete } from "../../../redux/visualizer/visualizer-actions";
+import { resetVisualizer, visualizationComplete } from "../../../redux";
 import { Box } from "@material-ui/core";
 
 interface RootState {

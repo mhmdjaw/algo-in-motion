@@ -11,10 +11,7 @@ import { randomNumberInterval } from "../../../heplers";
 import { OptionsState } from "../../../redux/options/options-types";
 import { VisualizerState } from "../../../redux/visualizer/visualizer-types";
 import { Edge, NodePosition, Graph } from "../graph-canvas-types";
-import {
-  resetVisualizer,
-  visualizationComplete,
-} from "../../../redux/visualizer/visualizer-actions";
+import { resetVisualizer, visualizationComplete } from "../../../redux";
 import { BFS, DFS } from "../../../algorithms/algorithm-types";
 import bfs from "../../../algorithms/bfs";
 import dfs from "../../../algorithms/dfs";

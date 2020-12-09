@@ -14,9 +14,12 @@ import { useHistory, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import useNavBarStyles from "./nav-bar-styles";
 import { useDispatch, useSelector } from "react-redux";
-import { resetVisualizer, runVisualizer } from "../../redux";
-import { changeVisualizer } from "../../redux/visualizer/visualizer-actions";
-import { resetOptions } from "../../redux/options/options-actions";
+import {
+  resetVisualizer,
+  runVisualizer,
+  changeVisualizer,
+  resetOptions,
+} from "../../redux";
 import { VisualizerState } from "../../redux/visualizer/visualizer-types";
 
 interface Props {
@@ -68,7 +71,11 @@ const NavBar: React.FC<Props> = (props: Props) => {
   };
 
   const handleActionClick = () => {
-    if (state.visualizer.isRunning || state.visualizer.isComplete) {
+    if (
+      state.visualizer.isRunning ||
+      state.visualizer.isComplete ||
+      state.visualizer.isGenerating
+    ) {
       dispatch(resetVisualizer());
     } else {
       dispatch(runVisualizer());
@@ -128,7 +135,9 @@ const NavBar: React.FC<Props> = (props: Props) => {
               onClick={handleActionClick}
               aria-label="action-visualizer"
             >
-              {state.visualizer.isRunning || state.visualizer.isComplete ? (
+              {state.visualizer.isRunning ||
+              state.visualizer.isComplete ||
+              state.visualizer.isGenerating ? (
                 <ReplayIcon />
               ) : (
                 <PlayArrowIcon />
