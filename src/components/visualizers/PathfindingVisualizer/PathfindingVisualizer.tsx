@@ -60,6 +60,8 @@ const PathfindingVisualizer: React.FC = () => {
     rows = mazeSize.current.rows;
     cols = mazeSize.current.cols;
 
+    cols = cols > 101 ? 101 : cols;
+
     const newMaze = new Array(rows);
     cellColor.current = new Array(rows);
 
@@ -72,10 +74,10 @@ const PathfindingVisualizer: React.FC = () => {
       }
     }
 
-    mazeRef.current = new Array(rows);
+    mazeRef.current = new Array(101);
 
-    for (let i = 0; i < rows; i++) {
-      mazeRef.current[i] = new Array(cols);
+    for (let i = 0; i < 101; i++) {
+      mazeRef.current[i] = new Array(101);
     }
 
     setMaze(newMaze);

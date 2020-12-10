@@ -18,7 +18,6 @@ const useDescriptionStyles = makeStyles((theme) => ({
     fontStyle: "italic",
   },
   notice: {
-    lineHeight: "2",
     marginBottom: "10%",
   },
   legend: {
