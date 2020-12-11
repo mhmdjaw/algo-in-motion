@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/algo-in-motion/static/css/main.2ae47eeb.chunk.css",
-    "main.js": "/algo-in-motion/static/js/main.a844add4.chunk.js",
-    "main.js.map": "/algo-in-motion/static/js/main.a844add4.chunk.js.map",
+    "main.js": "/algo-in-motion/static/js/main.f2ed64b3.chunk.js",
+    "main.js.map": "/algo-in-motion/static/js/main.f2ed64b3.chunk.js.map",
     "runtime-main.js": "/algo-in-motion/static/js/runtime-main.974fce61.js",
     "runtime-main.js.map": "/algo-in-motion/static/js/runtime-main.974fce61.js.map",
     "static/js/2.6584f4fa.chunk.js": "/algo-in-motion/static/js/2.6584f4fa.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.974fce61.js",
     "static/js/2.6584f4fa.chunk.js",
     "static/css/main.2ae47eeb.chunk.css",
-    "static/js/main.a844add4.chunk.js"
+    "static/js/main.f2ed64b3.chunk.js"
   ]
 }
