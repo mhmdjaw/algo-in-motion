@@ -13,7 +13,6 @@ import { OptionsState } from "../../../redux/options/options-types";
 import { useLocation } from "react-router-dom";
 import { MERGE_SORT, QUICK_SORT } from "../../../algorithms/algorithm-types";
 import { randomNumberInterval } from "../../../heplers";
-import { testMaze } from "../../../algorithms/maze-generation";
 
 interface RootState {
   visualizer: VisualizerState;
