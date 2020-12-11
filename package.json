@@ -28,7 +28,10 @@
     "typescript": "^3.8.3",
     "uuid": "^8.3.1"
   },
+  "homepage": "http://mhmdjaw.github.io/algo-in-motion",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

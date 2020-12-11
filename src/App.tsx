@@ -17,7 +17,7 @@ import PathfindingVisualizer from "./components/visualizers/PathfindingVisualize
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Redirect exact from="/algorithms" to="/algorithms/quick-sort" />
