@@ -18,7 +18,7 @@ Link:
 
 **Randomized Breadth First Search**: maze generation algorithm
 
-**A* Pathfindding**: pathfinding algorithm
+**A\* Pathfindding**: pathfinding algorithm
 
 ## Bonus Visualizer
 
