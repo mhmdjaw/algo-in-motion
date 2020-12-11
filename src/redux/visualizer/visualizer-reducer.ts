@@ -39,6 +39,7 @@ const visualizerReducer = (
         ...state,
         isRunning: false,
         isComplete: false,
+        isGenerating: false,
       };
 
     case VISUALIZATION_COMPLETE:
