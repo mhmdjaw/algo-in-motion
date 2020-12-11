@@ -49,7 +49,10 @@ const PathfindingVisualizer: React.FC = () => {
     const width = 0.95 * window.innerWidth;
     const height = 0.8 * window.innerHeight;
 
-    let rows = Math.floor((height / width) * 103);
+    let rows =
+      height < width
+        ? Math.floor((height / width) * 103)
+        : Math.floor((width / height) * 103);
     rows = rows % 2 === 0 ? rows - 1 : rows;
     cellSize.current = height / rows;
     let cols = Math.floor(width / cellSize.current);
