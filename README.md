@@ -28,4 +28,4 @@ Link:
 
 
 
-**Enjoy watching these fascinating algorithms work in action!**
+### Enjoy watching these fascinating algorithms work in action!
