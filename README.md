@@ -29,3 +29,7 @@ Link: http://mhmdjaw.github.io/algo-in-motion/
 
 
 ### Enjoy watching these fascinating algorithms work in action!
+
+## License
+
+This project is licensed under the MIT license.
