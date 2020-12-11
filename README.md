@@ -4,6 +4,8 @@ Algo in Motion is an algorithm visualizer for some of the most popular algorithm
 
 Link: http://mhmdjaw.github.io/algo-in-motion/
 
+
+
 ## Algorithms
 
 **Quick Sort**: sorting algorithm
@@ -14,7 +16,7 @@ Link: http://mhmdjaw.github.io/algo-in-motion/
 
 **Depth First Search**: graph traversal algorithm
 
-**Traveling Salesman Backtracking**: backtracking algorithm to find the shortest possible route to visit each city once
+**Traveling Salesman Backtracking**: backtracking algorithm that finds the shortest possible route to visit each city once
 
 **Randomized Breadth First Search**: maze generation algorithm
 
