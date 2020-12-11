@@ -25,4 +25,7 @@ Link:
 **Times Tables**: math concept based visualization
 
 
-Enjoy watching these fascinating algorithms work in action!
+
+
+
+**Enjoy watching these fascinating algorithms work in action!**
