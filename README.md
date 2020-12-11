@@ -2,7 +2,7 @@
 
 Algo in Motion is an algorithm visualizer for some of the most popular algorithms out there.
 
-Link:
+Link: http://mhmdjaw.github.io/algo-in-motion/
 
 ## Algorithms
 
