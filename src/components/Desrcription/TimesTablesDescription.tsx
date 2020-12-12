@@ -9,11 +9,11 @@ const TimesTablesDescription: React.FC = () => {
   return (
     <Typography>
       Taken by this fascinating animation and just can&apos;t stop looking at
-      it? I won&apos;t blame you. I could stare at this forever. What
-      you&apos;re witnessing here is the artistic side of math. Yes, you heard
-      me right. This animation is not really algorithm based. The reason I
-      decided to include it is just how fascinating the animation and how
-      interesting the concept behind it is.
+      it? I won&apos;t blame you. I could stare at this forever (the animation
+      is not looping by the way). What you&apos;re witnessing here is the
+      artistic side of math. Yes, you heard me right. This animation is not
+      really algorithm based. The reason I decided to include it is just how
+      fascinating the animation and how interesting the concept behind it is.
       <br />
       <br />
       <br />
@@ -35,7 +35,8 @@ const TimesTablesDescription: React.FC = () => {
       factor. Each frame is a different factor starting from{" "}
       <em className={classes.italic}>0</em> and incrementing by{" "}
       <em className={classes.italic}>0.01</em>. We end up with this absolutely
-      stunning animation that goes on forever. All it takes is straight lines
+      stunning animation that goes on forever. Leave this for long enough and
+      you will notice crazy things happening. All it takes is straight lines
       changing positions using basic math to produce this animation. Just
       increase the number of points and animation speed to max and enjoy math
       doing wonders.
