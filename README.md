@@ -20,7 +20,7 @@ Link: http://mhmdjaw.github.io/algo-in-motion/
 
 **Randomized Breadth First Search**: maze generation algorithm
 
-**A\* Pathfindding**: pathfinding algorithm
+**A\* Pathfinding**: pathfinding algorithm
 
 ## Bonus Visualizer
 
