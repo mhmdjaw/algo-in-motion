@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/algo-in-motion/static/css/main.2ae47eeb.chunk.css",
-    "main.js": "/algo-in-motion/static/js/main.b2e8b55f.chunk.js",
-    "main.js.map": "/algo-in-motion/static/js/main.b2e8b55f.chunk.js.map",
+    "main.js": "/algo-in-motion/static/js/main.6ef25db3.chunk.js",
+    "main.js.map": "/algo-in-motion/static/js/main.6ef25db3.chunk.js.map",
     "runtime-main.js": "/algo-in-motion/static/js/runtime-main.974fce61.js",
     "runtime-main.js.map": "/algo-in-motion/static/js/runtime-main.974fce61.js.map",
-    "static/js/2.9ebdf96e.chunk.js": "/algo-in-motion/static/js/2.9ebdf96e.chunk.js",
-    "static/js/2.9ebdf96e.chunk.js.map": "/algo-in-motion/static/js/2.9ebdf96e.chunk.js.map",
+    "static/js/2.6e2ebc2d.chunk.js": "/algo-in-motion/static/js/2.6e2ebc2d.chunk.js",
+    "static/js/2.6e2ebc2d.chunk.js.map": "/algo-in-motion/static/js/2.6e2ebc2d.chunk.js.map",
     "index.html": "/algo-in-motion/index.html",
     "static/css/main.2ae47eeb.chunk.css.map": "/algo-in-motion/static/css/main.2ae47eeb.chunk.css.map",
-    "static/js/2.9ebdf96e.chunk.js.LICENSE.txt": "/algo-in-motion/static/js/2.9ebdf96e.chunk.js.LICENSE.txt",
+    "static/js/2.6e2ebc2d.chunk.js.LICENSE.txt": "/algo-in-motion/static/js/2.6e2ebc2d.chunk.js.LICENSE.txt",
     "static/media/algorithms.57851885.mp4": "/algo-in-motion/static/media/algorithms.57851885.mp4",
     "static/media/description.2c635a95.mp4": "/algo-in-motion/static/media/description.2c635a95.mp4",
     "static/media/logo.79874e35.svg": "/algo-in-motion/static/media/logo.79874e35.svg",
@@ -17,8 +17,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.974fce61.js",
-    "static/js/2.9ebdf96e.chunk.js",
+    "static/js/2.6e2ebc2d.chunk.js",
     "static/css/main.2ae47eeb.chunk.css",
-    "static/js/main.b2e8b55f.chunk.js"
+    "static/js/main.6ef25db3.chunk.js"
   ]
 }
