@@ -73,7 +73,7 @@ const Tutorial: React.FC = () => {
       />
       <Slide
         media={
-          <video autoPlay loop muted width="500" height="500">
+          <video autoPlay loop muted width="400" height="400">
             <source src={description} type="video/mp4" />
           </video>
         }
