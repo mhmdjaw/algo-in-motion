@@ -44,7 +44,7 @@ const Tutorial: React.FC = () => {
       />
       <Slide
         media={
-          <video autoPlay loop muted>
+          <video autoPlay loop muted playsInline>
             <source src={algorithms} type="video/mp4" />
           </video>
         }
@@ -55,7 +55,7 @@ const Tutorial: React.FC = () => {
       />
       <Slide
         media={
-          <video autoPlay loop muted>
+          <video autoPlay loop muted playsInline>
             <source src={playButton} type="video/mp4" />
           </video>
         }
@@ -73,7 +73,7 @@ const Tutorial: React.FC = () => {
       />
       <Slide
         media={
-          <video autoPlay loop muted width="80%" height="80%">
+          <video autoPlay loop muted playsInline width="80%" height="80%">
             <source src={description} type="video/mp4" />
           </video>
         }
