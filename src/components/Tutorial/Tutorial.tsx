@@ -6,6 +6,7 @@ import algorithms from "../../assets/algorithms.mp4";
 import playButton from "../../assets/play-button.mp4";
 import options from "../../assets/options.png";
 import description from "../../assets/description.mp4";
+import drag from "../../assets/drag.mp4";
 import { makeStyles, useMediaQuery } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -91,6 +92,23 @@ const Tutorial: React.FC = () => {
         style={{ backgroundColor: PAPER }}
         title="Options"
         subtitle="Each visualizer has a set of options you can control."
+      />
+      <Slide
+        media={
+          <video
+            className={classes.tutorialItem}
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src={drag} type="video/mp4" />
+          </video>
+        }
+        mediaBackgroundStyle={{ backgroundColor: BACKGROUND }}
+        style={{ backgroundColor: PAPER }}
+        title="Draggable Nodes"
+        subtitle="Drag nodes and space them to your liking."
       />
       <Slide
         media={
