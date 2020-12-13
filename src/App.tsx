@@ -14,6 +14,7 @@ import GraphTraversalVisualizer from "./components/visualizers/GraphTraversalVis
 import TimesTablesVisualizer from "./components/visualizers/TimesTablesVisualizer";
 import TravelingSalesman from "./components/visualizers/TravelingSalesman";
 import PathfindingVisualizer from "./components/visualizers/PathfindingVisualizer";
+import Tutorial from "./components/Tutorial";
 
 const App: React.FC = () => {
   return (
@@ -23,7 +24,8 @@ const App: React.FC = () => {
         <Redirect exact from="/algorithms" to="/algorithms/quick-sort" />
       </Switch>
       <Route path="/algorithms/:algorithm">
-        <NavBar>{}</NavBar>
+        <Tutorial />
+        <NavBar>{<></>}</NavBar>
         <Options />
         <Route path={["/algorithms/quick-sort", "/algorithms/merge-sort"]}>
           <SortingVisualizer />
