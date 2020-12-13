@@ -19,7 +19,7 @@ const Tutorial: React.FC = () => {
   };
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const color = theme.palette;
   const [BACKGROUND, PAPER] = [
     color.background.default,
