@@ -6,6 +6,7 @@ import algorithms from "../../assets/algorithms.mp4";
 import playButton from "../../assets/play-button.mp4";
 import options from "../../assets/options.png";
 import description from "../../assets/description.mp4";
+import { useMediaQuery } from "@material-ui/core";
 
 const Tutorial: React.FC = () => {
   const [isTutorial, setIsTutorial] = useState<boolean>(
@@ -18,6 +19,7 @@ const Tutorial: React.FC = () => {
   };
 
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const color = theme.palette;
   const [BACKGROUND, PAPER] = [
     color.background.default,
@@ -29,6 +31,7 @@ const Tutorial: React.FC = () => {
       label="Close Tutorial"
       open={isTutorial}
       onStart={onTutorialExit}
+      mobile={isMobile}
       ButtonProps={{ color: "primary", variant: "outlined" }}
       autoplay={false}
     >
@@ -70,7 +73,7 @@ const Tutorial: React.FC = () => {
       />
       <Slide
         media={
-          <video autoPlay loop muted>
+          <video autoPlay loop muted width="500" height="500">
             <source src={description} type="video/mp4" />
           </video>
         }
