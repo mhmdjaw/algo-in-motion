@@ -6,9 +6,18 @@ import algorithms from "../../assets/algorithms.mp4";
 import playButton from "../../assets/play-button.mp4";
 import options from "../../assets/options.png";
 import description from "../../assets/description.mp4";
-import { useMediaQuery } from "@material-ui/core";
+import { makeStyles, useMediaQuery } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  tutorialItem: {
+    height: "80%",
+    width: "80%",
+  },
+});
 
 const Tutorial: React.FC = () => {
+  const classes = useStyles();
+
   const [isTutorial, setIsTutorial] = useState<boolean>(
     (localStorage.getItem("isFirstTime") ?? "true") === "true"
   );
@@ -36,7 +45,7 @@ const Tutorial: React.FC = () => {
       autoplay={false}
     >
       <Slide
-        media={<img src={logo} />}
+        media={<img src={logo} className={classes.tutorialItem} />}
         mediaBackgroundStyle={{ backgroundColor: BACKGROUND }}
         style={{ backgroundColor: PAPER }}
         title="Welcome to Algo in Motion"
@@ -44,7 +53,13 @@ const Tutorial: React.FC = () => {
       />
       <Slide
         media={
-          <video autoPlay loop muted playsInline>
+          <video
+            className={classes.tutorialItem}
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
             <source src={algorithms} type="video/mp4" />
           </video>
         }
@@ -55,7 +70,13 @@ const Tutorial: React.FC = () => {
       />
       <Slide
         media={
-          <video autoPlay loop muted playsInline>
+          <video
+            className={classes.tutorialItem}
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
             <source src={playButton} type="video/mp4" />
           </video>
         }
@@ -73,7 +94,13 @@ const Tutorial: React.FC = () => {
       />
       <Slide
         media={
-          <video autoPlay loop muted playsInline width="80%" height="80%">
+          <video
+            className={classes.tutorialItem}
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
             <source src={description} type="video/mp4" />
           </video>
         }
