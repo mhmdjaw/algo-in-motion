@@ -107,7 +107,7 @@ const Tutorial: React.FC = () => {
         mediaBackgroundStyle={{ backgroundColor: BACKGROUND }}
         style={{ backgroundColor: PAPER }}
         title="Description"
-        subtitle="Scroll down to read the decription of the visualizer."
+        subtitle="Scroll down to read the description of the visualizer."
       />
     </AutoRotatingCarousel>
   );
