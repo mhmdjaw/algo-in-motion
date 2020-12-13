@@ -49,7 +49,7 @@ const Tutorial: React.FC = () => {
         media={<img src={logo} className={classes.tutorialItem} />}
         mediaBackgroundStyle={{ backgroundColor: BACKGROUND }}
         style={{ backgroundColor: PAPER }}
-        title="Welcome to Algo in Motion"
+        title="Welcome!"
         subtitle="Let's walk through the tutorial! Feel free to skip it by clicking on the button below."
       />
       <Slide
