@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/algo-in-motion/static/css/main.2ae47eeb.chunk.css",
-    "main.js": "/algo-in-motion/static/js/main.d2d97b7b.chunk.js",
-    "main.js.map": "/algo-in-motion/static/js/main.d2d97b7b.chunk.js.map",
+    "main.js": "/algo-in-motion/static/js/main.f7883e87.chunk.js",
+    "main.js.map": "/algo-in-motion/static/js/main.f7883e87.chunk.js.map",
     "runtime-main.js": "/algo-in-motion/static/js/runtime-main.974fce61.js",
     "runtime-main.js.map": "/algo-in-motion/static/js/runtime-main.974fce61.js.map",
     "static/js/2.232fda7c.chunk.js": "/algo-in-motion/static/js/2.232fda7c.chunk.js",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.974fce61.js",
     "static/js/2.232fda7c.chunk.js",
     "static/css/main.2ae47eeb.chunk.css",
-    "static/js/main.d2d97b7b.chunk.js"
+    "static/js/main.f7883e87.chunk.js"
   ]
 }
