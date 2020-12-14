@@ -21,10 +21,10 @@ const MergeSortDescription: React.FC = () => {
         Just like Quick Sort, Merge Sort is a Divide and Conquer algorithm, and
         one of its main competitors. The main difference is that unlike Quick
         Sort, Merge Sort is <strong className={classes.emp}>stable </strong>,
-        which means it has the same complexity of{" "}
+        which means it has the same time complexity of{" "}
         <em className={classes.italic}>O (n log n) </em> from its best to its
         worst case. The reason why in the worst case it performs better than
-        Quick Sort which has a complexity of{" "}
+        Quick Sort which has a time complexity of{" "}
         <em className={classes.italic}>
           O (n<sup>2</sup>),{" "}
         </em>{" "}

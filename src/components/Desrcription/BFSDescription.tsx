@@ -18,7 +18,7 @@ const BFSDescription: React.FC = () => {
       <Typography className={classes.title}>Explanation</Typography>
       <Typography>
         Breadth First Search is a graph traversing algorithm. The goal of it is
-        to visit every node of the graph once. The complexity of BFS is
+        to visit every node of the graph once. The time complexity of BFS is
         <em className={classes.italic}> O (V + E) </em> where{" "}
         <em className={classes.italic}>V </em>
         is the number of vertices (nodes) and{" "}

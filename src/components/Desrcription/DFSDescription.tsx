@@ -19,7 +19,7 @@ const DFSDescription: React.FC = () => {
       <Typography className={classes.title}>Explanation</Typography>
       <Typography>
         Like Breadth First Search, Depth First Search is also a graph traversing
-        algorithm, and has the same complexity of
+        algorithm, and has the same time complexity of
         <br />
         <em className={classes.italic}>O (V + E) </em>. The approach however is
         the opposite as the name states.

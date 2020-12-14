@@ -21,7 +21,7 @@ const QuickSortDescription: React.FC = () => {
       <Typography>
         Quick Sort is a Divide and Conquer algorithm, which means the problem is
         recursively divided into smaller problems until they are easy to solve.
-        The complexity of quick sort is
+        The time complexity of quick sort is
         <em className={classes.italic}> O(n log n)</em> in the best and average
         case, and{" "}
         <em className={classes.italic}>
