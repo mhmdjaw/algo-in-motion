@@ -24,11 +24,7 @@ const bfs = (graph: GraphNode[]): Animation[] => {
     col[node] = 2;
 
     for (let i = 0; i < graph[node].neighbor.length; i++) {
-      console.log("hello");
-
       if (col[graph[node].neighbor[i]] === 0) {
-        console.log(graph[node].neighbor[i]);
-
         // visit edge and neighbor
         animations.push({
           action: "VISIT_EDGE",

@@ -78,7 +78,6 @@ const SortingVisualizer: React.FC = () => {
           const jBar = barRef.current[j]?.style;
 
           timeouts.current[index] = setTimeout(() => {
-            console.log("hello");
             if (pivotBar) pivotBar.background = YELLOW;
             if (iBar) iBar.background = GREEN;
             if (jBar) jBar.background = GREEN;
@@ -246,8 +245,6 @@ const SortingVisualizer: React.FC = () => {
 
   useEffect(() => {
     if (state.visualizer.isRunning) {
-      console.log("animation Running");
-
       if (pathname.split("/")[2] === QUICK_SORT) {
         quickSortRun();
       } else if (pathname.split("/")[2] === MERGE_SORT) {
